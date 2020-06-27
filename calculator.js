@@ -47,6 +47,26 @@ function Calculator(selector){
         head.appendChild(style);
     })();
 
+    var buttons = {
+        'add' : '+',
+        'sub' : '-',
+        'mul' : '*',
+        'div' : '/',
+        'sqr' : '√',
+        'zero' : '0',
+        'one' : '1',
+        'two' : '2',
+        'three' : '3',
+        'four' : '4',
+        'five' : '5',
+        'six' : '6',
+        'seven' : '7',
+        'eight' : '8',
+        'nine' : '9',
+        'delete' : '←',
+        'eval' : '='
+    }
+    var display_commands, display_result;
     (function HTML() {
         var existingElement = null;
         try {
@@ -59,47 +79,60 @@ function Calculator(selector){
             }
         }
         that.elem = document.createElement("div");
+        existingElement.appendChild(that.elem);
         that.elem.innerHTML = `
             <table class="calculator">
                 <thead>
                     <tr>
-                        <td>
-                            <input class="display" value="" type="text" readonly="true"></input>
+                        <td colspan="4">
+                            <input class="commandline" value="" type="text" readonly="true"></input></br>
+                            <input class="result" value="" type="text" readonly="true"></input>
                         </td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>+</td>
-                        <td>-</td>
-                        <td>*</td>
-                        <td>/</td>
+                        <td class="add"></td>
+                        <td class="sub"></td>
+                        <td class="mul"></td>
+                        <td class="div">/</td>
                     </tr>
                     <tr>
-                        <td>7</td>
-                        <td>8</td>
-                        <td>9</td>
-                        <td>¬</td>
+                        <td class="seven"></td>
+                        <td class="eight"></td>
+                        <td class="nine"></td>
+                        <td class="sqr"></td>
                     </tr>
                     <tr>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
-                        <td class="nonregex delete">←</td>
+                        <td class="four"></td>
+                        <td class="five"></td>
+                        <td class="six"></td>
+                        <td class="nonregex delete"></td>
                     </tr>
                     <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td class="nonregex eval">=</td>
+                        <td class="one"></td>
+                        <td class="two"></td>
+                        <td class="three"></td>
+                        <td class="nonregex eval"></td>
+                    </tr>
+                    <tr>
+                        <td class="zero"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
         `;
-        that.elem.querySelector("thead td").setAttribute("colspan", 4);
-        existingElement.appendChild(that.elem);
+        display_commands = that.elem.querySelector("input.commandline");
+        display_result = that.elem.querySelector("input.result");
 
-        that.display = that.elem.querySelector("input.display");
+        Object.keys(buttons).forEach((key) => {
+            var btn = that.elem.querySelector(`tbody .${key}`);
+            if(!!btn){
+                btn.innerText = buttons[key];
+            }
+        });
     })();
 
     (function API() {
@@ -130,19 +163,19 @@ function Calculator(selector){
             }
         }
 
-        var ServiceContainer = {
-            '+' : new Addition(),
-            '-' : new Subtraction(),
-            '*' : new Multiplication(),
-            '/' : new Division(),
-            '¬' : new Sqrt(),
-        }
+        var ServiceContainer = {};
+        ServiceContainer[buttons['add']] = new Addition();
+        ServiceContainer[buttons['sub']] = new Subtraction();
+        ServiceContainer[buttons['mul']] = new Multiplication();
+        ServiceContainer[buttons['div']] = new Division();
+        ServiceContainer[buttons['sqr']] = new Sqrt();
 
-        var reg = /(?:(\d+)([+\-*/])(\d+))|(?:([¬])(\d+))/;
+        var reg = /(?:(\d+)([+\-*/])(\d+))|(?:([√])(\d+))/;
 
         var commands = '';
-        that.SetDisplay = function(value){
-            that.display.value = value;
+        that.SetDisplay = function(command, result){
+            if(command != null) display_commands.value = command;
+            if(result != null) display_result.value = result;
         }
         that.Enter = function(symbol) {
             commands += symbol;
@@ -168,8 +201,9 @@ function Calculator(selector){
         }
         that.Evaluate = function(){
             if(!!commands){
-                that.SetDisplay(Calculate());
+                var res = Calculate();
                 commands = "";
+                that.SetDisplay(commands, res);
             }
         }
     })();
