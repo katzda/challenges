@@ -47,7 +47,7 @@ function Calculator(selector){
         head.appendChild(style);
     })();
 
-    var buttons = {
+    var buttons_viewtext = {
         'add' : '+',
         'sub' : '-',
         'mul' : '*',
@@ -127,10 +127,10 @@ function Calculator(selector){
         display_commands = that.elem.querySelector("input.commandline");
         display_result = that.elem.querySelector("input.result");
 
-        Object.keys(buttons).forEach((key) => {
+        Object.keys(buttons_viewtext).forEach((key) => {
             var btn = that.elem.querySelector(`tbody .${key}`);
             if(!!btn){
-                btn.innerText = buttons[key];
+                btn.innerText = buttons_viewtext[key];
             }
         });
     })();
@@ -164,13 +164,13 @@ function Calculator(selector){
         }
 
         var ServiceContainer = {};
-        ServiceContainer[buttons['add']] = new Addition();
-        ServiceContainer[buttons['sub']] = new Subtraction();
-        ServiceContainer[buttons['mul']] = new Multiplication();
-        ServiceContainer[buttons['div']] = new Division();
-        ServiceContainer[buttons['sqr']] = new Sqrt();
+        ServiceContainer[buttons_viewtext['add']] = new Addition();
+        ServiceContainer[buttons_viewtext['sub']] = new Subtraction();
+        ServiceContainer[buttons_viewtext['mul']] = new Multiplication();
+        ServiceContainer[buttons_viewtext['div']] = new Division();
+        ServiceContainer[buttons_viewtext['sqr']] = new Sqrt();
 
-        var reg = /(?:(\d+)([+\-*/])(\d+))|(?:([√])(\d+))/;
+        var supportedSyntax = /(?:(\d+)([+\-*/])(\d+))|(?:([√])(\d+))/;
 
         var commands = '';
         that.SetDisplay = function(command, result){
@@ -185,25 +185,30 @@ function Calculator(selector){
             commands = commands.substr(0, commands.length - 1);
             that.SetDisplay(commands);
         }
-        function Calculate() {
-            let todo = commands.match(reg);
-            do {
-                todo.shift();
-            } while(todo[0] == null);
-            /* Ternary ifs for operator and operands instead of looping through an interfaced syntax
-                recognition set of classes to distinguish between two syntaxes: a) number operator number (1 + 1)
-                            b) operator number (sqrt 50)
-                That would be ideal but for now an overkill since I know of just these two syntaxes
+        function Calculate(parsed) {
+            /* Ternary ifs for operator and operands instead of looping through an interfaced syntax recognition set of classes to distinguish between two syntaxes:
+                a) number operator number (1 + 1)
+                b) operator number (sqrt 50)
+               That would be ideal but for now an overkill since I know of just these two syntaxes
             */
-            const operator = todo.length == 2 ? todo[0] : todo[1];
-            const operands = todo.length == 2 ? [todo[1]] : [todo[0], todo[2]];
+            const operator = parsed.length == 2 ? parsed[0] : parsed[1];
+            const operands = parsed.length == 2 ? [parsed[1]] : [parsed[0], parsed[2]];
             return ServiceContainer[operator].Calculate(operands);
         }
+        var lastResult;
         that.Evaluate = function(){
             if(!!commands){
-                var res = Calculate();
-                commands = "";
-                that.SetDisplay(commands, res);
+                if(supportedSyntax.test(commands)){
+                    let parsedline = commands.match(supportedSyntax);
+                    do {
+                        parsedline.shift();
+                    } while(parsedline[0] == null);
+                    lastResult = Calculate(parsedline);
+                    commands = "";
+                    that.SetDisplay(commands, lastResult);
+                }else{
+                    that.SetDisplay(null, "Unsupported operation");
+                }
             }
         }
     })();
