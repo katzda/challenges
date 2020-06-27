@@ -64,9 +64,11 @@ function Calculator(selector){
         'eight' : '8',
         'nine' : '9',
         'delete' : '←',
-        'eval' : '='
+        'eval' : '=',
+        'ans' : 'ANS',
+        'decimal' : '.'
     }
-    var display_commands, display_result;
+    var display_commands, display_result, elem;
     (function HTML() {
         var existingElement = null;
         try {
@@ -78,9 +80,9 @@ function Calculator(selector){
                 existingElement = document.querySelector("body");
             }
         }
-        that.elem = document.createElement("div");
-        existingElement.appendChild(that.elem);
-        that.elem.innerHTML = `
+        elem = document.createElement("div");
+        existingElement.appendChild(elem);
+        elem.innerHTML = `
             <table class="calculator">
                 <thead>
                     <tr>
@@ -117,24 +119,25 @@ function Calculator(selector){
                     </tr>
                     <tr>
                         <td class="zero"></td>
-                        <td></td>
-                        <td></td>
+                        <td class="nonregex ans"></td>
+                        <td class="decimal"></td>
                         <td></td>
                     </tr>
                 </tbody>
             </table>
         `;
-        display_commands = that.elem.querySelector("input.commandline");
-        display_result = that.elem.querySelector("input.result");
+        display_commands = elem.querySelector("input.commandline");
+        display_result = elem.querySelector("input.result");
 
         Object.keys(buttons_viewtext).forEach((key) => {
-            var btn = that.elem.querySelector(`tbody .${key}`);
+            var btn = elem.querySelector(`tbody .${key}`);
             if(!!btn){
                 btn.innerText = buttons_viewtext[key];
             }
         });
     })();
 
+    var lastResult;
     (function API() {
         /* Back-end functionality */
         function Addition() {
@@ -170,20 +173,23 @@ function Calculator(selector){
         ServiceContainer[buttons_viewtext['div']] = new Division();
         ServiceContainer[buttons_viewtext['sqr']] = new Sqrt();
 
-        var supportedSyntax = /(?:(\d+)([+\-*/])(\d+))|(?:([√])(\d+))/;
+        var RgX = {
+            Number: "\\d+(?:\\.\\d+)?"
+        }
+        var supportedSyntax = new RegExp(`(?:(${RgX.Number})([+\\-*/])(${RgX.Number}))|(?:([√])(${RgX.Number}))`);
 
         var commands = '';
-        that.SetDisplay = function(command, result){
+        function SetDisplay(command, result){
             if(command != null) display_commands.value = command;
             if(result != null) display_result.value = result;
         }
         that.Enter = function(symbol) {
             commands += symbol;
-            that.SetDisplay(commands);
+            SetDisplay(commands);
         }
         that.Delete = function Delete() {
             commands = commands.substr(0, commands.length - 1);
-            that.SetDisplay(commands);
+            SetDisplay(commands);
         }
         function Calculate(parsed) {
             /* Ternary ifs for operator and operands instead of looping through an interfaced syntax recognition set of classes to distinguish between two syntaxes:
@@ -195,7 +201,6 @@ function Calculator(selector){
             const operands = parsed.length == 2 ? [parsed[1]] : [parsed[0], parsed[2]];
             return ServiceContainer[operator].Calculate(operands);
         }
-        var lastResult;
         that.Evaluate = function(){
             if(!!commands){
                 if(supportedSyntax.test(commands)){
@@ -205,9 +210,9 @@ function Calculator(selector){
                     } while(parsedline[0] == null);
                     lastResult = Calculate(parsedline);
                     commands = "";
-                    that.SetDisplay(commands, lastResult);
+                    SetDisplay(commands, lastResult);
                 }else{
-                    that.SetDisplay(null, "Unsupported syntax");
+                    SetDisplay(null, "Unsupported syntax");
                 }
             }
         }
@@ -223,28 +228,28 @@ function Calculator(selector){
         function HandleSymbol(mouseEvent){
             that.Enter(mouseEvent.target.innerText);
         }
-        function HandleDeleteAction(mouseEvent){
-            that.Delete();
-        }
-        function HandleEvaluateAction(mouseEvent){
-            that.Evaluate();
-        }
+
+
         /* all buttons */
-        that.elem.querySelectorAll("tbody td").forEach((button) => {
+        elem.querySelectorAll("tbody td").forEach((button) => {
             button.addEventListener("mousedown", AddPressedClass);
             button.addEventListener("mouseup", RemovePressedClass);
+            button.addEventListener("mouseleave", RemovePressedClass);
         });
         /* buttons: operands and operators */
-        that.elem.querySelectorAll("tbody td:not(.nonregex)").forEach((button) => {
+        elem.querySelectorAll("tbody td:not(.nonregex)").forEach((button) => {
             button.addEventListener("mousedown", HandleSymbol);
         });
-        /* delete */
-        that.elem.querySelectorAll("tbody td.delete").forEach((button) => {
-            button.addEventListener("mousedown", HandleDeleteAction);
+
+        /* functional buttons */
+        elem.querySelector("tbody td.delete").addEventListener("mousedown", function (mouseEvent){
+            that.Delete();
         });
-        /* evaluate */
-        that.elem.querySelectorAll("tbody td.eval").forEach((button) => {
-            button.addEventListener("mousedown", HandleEvaluateAction);
+        elem.querySelector("tbody td.eval").addEventListener("mousedown", function (mouseEvent){
+            that.Evaluate();
+        });
+        elem.querySelector("tbody td.ans").addEventListener("mousedown", function (mouseEvent){
+            that.Enter(lastResult);
         });
     })();
     return this;
