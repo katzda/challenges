@@ -207,7 +207,7 @@ function Calculator(selector){
                     commands = "";
                     that.SetDisplay(commands, lastResult);
                 }else{
-                    that.SetDisplay(null, "Unsupported operation");
+                    that.SetDisplay(null, "Unsupported syntax");
                 }
             }
         }
