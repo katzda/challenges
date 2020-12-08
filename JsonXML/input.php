@@ -7,21 +7,12 @@ function json_to_xml($json, $isRoot = true){
 
     $result = $isRoot ? '<root>' : '';
     foreach($obj as $key => $value){
-        $isObjectORarray = in_array(gettype($value), ['object','array']);
-
-        if($isArray){
-            $result .= "<element>"
-                    . ($isObjectORarray
-                        ? json_to_xml(json_encode($value), false)
-                        : $value)
-                    . "</element>";
-        }else{
-            $result .= "<$key>"
-                    . ($isObjectORarray
-                        ? json_to_xml(json_encode($value), false)
-                        : $value)
-                    . "</$key>";
-        }
+        $tagName = $isArray ? "element" : $key;
+        $result .= "<$tagName>";
+        $result .= (in_array(gettype($value), ['object','array'])
+                    ? json_to_xml(json_encode($value), false)
+                    : $value);
+        $result .= "</$tagName>";
     }
     $result .= $isRoot ? '</root>' : '';
     return $result;
