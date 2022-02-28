@@ -6,4 +6,4 @@ This may not be very obvious from the fact that its written in vanilla JavaScrip
 
 You can create a new instance of the Calculator under any div and it will generate its own HTML and if you assign it to a variable, you can interact with it using the command-line.
 
-Preview here: https://katzda.github.io/challenges/Calculator/
+Preview here: https://katzda.github.io/challenges/
