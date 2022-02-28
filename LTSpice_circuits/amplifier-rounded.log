@@ -1,0 +1,21 @@
+Circuit: * D:\Users\Daniel\Dropbox\Documents\Circuits\amplifier-rounded.asc
+
+Direct Newton iteration for .op point succeeded.
+
+Date: Tue Feb 22 21:31:31 2022
+Total elapsed time: 0.067 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 16029
+traniter = 16025
+tranpoints = 8012
+accept = 4821
+rejected = 3191
+matrix size = 17
+fillins = 20
+solver = Normal
+Matrix Compiler1: 2.71 KB object code size  0.5/0.2/[0.1]
+Matrix Compiler2: 1.84 KB object code size  0.2/0.2/[0.1]
+
