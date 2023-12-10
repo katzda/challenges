@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personality generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #result {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+  </style>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+  <div id="result">
+      <h2 style="text-align: center;">
+        <span id="name"></span>
+        of
+        <span id="country"></span>
+      </h2>
+      <div>
+          Eating
+          <span id="fruit"></span>
+      </div>
+      <div>
+          Has a
+          <span id="animal"></span>
+      </div>
+      <div>
+          Fan of
+          <span id="sport"></span>
+      </div>
+  </div>
+  <button id="generateButton">Generate</button>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

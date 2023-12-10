@@ -15,11 +15,11 @@ function generateName() {
   const country = getRandomElement(countries);
   const animal = getRandomElement(animals);
 
-  const resultDiv = document.getElementById('result');
-  resultDiv.innerHTML = `
-    <p>${name} from ${country}</p>
-    <p>eating ${fruit}</p>
-    <p>has a ${animal}</p>
-    <p>Fan of ${sport}</p>
-  `;
+  document.getElementById('name').innerText = name;
+  document.getElementById('country').innerText = country;
+  document.getElementById('fruit').innerText = fruit;
+  document.getElementById('animal').innerText = animal;
+  document.getElementById('sport').innerText = sport;
 }
+
+document.getElementById('generateButton').addEventListener('click', generateName);
