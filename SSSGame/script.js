@@ -64,7 +64,6 @@ function MemoryGame(noChairs = 1){
                 personDiv.innerText = '-';
             }
 
-            personDiv.appendChild(personDiv);
             tableEl.appendChild(personDiv);
         }
     }
