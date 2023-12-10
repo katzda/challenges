@@ -13,10 +13,10 @@ function MemoryGame(noChairs = 1){
     var personEl = document.getElementById('person');
 
     var nameEl = document.getElementById('name');
-    var sportEl = document.getElementById('name');
-    var fruitEl = document.getElementById('name');
-    var countryEl = document.getElementById('name');
-    var animalEl = document.getElementById('name');
+    var sportEl = document.getElementById('sport');
+    var fruitEl = document.getElementById('fruit');
+    var countryEl = document.getElementById('country');
+    var animalEl = document.getElementById('animal');
 
     var names = ['Jack','Emma','Liam','Olivia','Noah','Ava','Lucas','Sophia','Ethan','Isabella','Mason','Mia','Logan','Charlotte','Jacob','Amelia','Aiden','Nicole','Benjamin','Evelyn','William','Abigail','James','Emily','Oliver','Elizabeth','Elijah','Avery','Alexander','Sofia','Michael','Ella','Daniel','Scarlett','Henry','Grace','Jackson','Chloe','Sebastian','Lily','Matthew','Addison','Samuel','Natalie','David','Victoria','Joseph','Zoey','Carter','Penelope','Gabriel','Layla','Luke','Riley','Anthony','Aubrey','Isaac','Nora','Dylan','Skylar','Wyatt','Hannah','Andrew','Zoey','Joshua','Brooklyn','Christopher','Savannah','Grayson','Audrey','Nathan','Leah','Eli','Claire','Samuel','Stella','Owen','Paisley','Connor','Ellie','Landon','Maya','Ryan','Violet','Isaiah','Aria','Christian','Aurora','Hunter','Sarah','Cameron','Caroline','Thomas','Naomi','Charles','Anna','Julian','Samantha','Aaron','Eliana'];
     var sports = ['Football (Soccer)','Basketball','American Football','Baseball','Tennis','Golf','Rugby','Cricket','Volleyball','Table Tennis','Badminton','Hockey','Swimming','Running (Track and Field)','Boxing','Martial Arts','Wrestling','Gymnastics','Cycling','Surfing','Skateboarding','Snowboarding','Skiing','Weightlifting','Archery','Shooting','Fencing','Diving','Sailing','Rowing','Canoeing/Kayaking','Equestrian','Triathlon','Triathlon','Pole Vault','High Jump','Long Jump','Javelin Throw','Hammer Throw','Discus Throw','Decathlon/Heptathlon','Bobsleigh','Bungee Jumping','Rock Climbing','Mountaineering','Paragliding','Kite Surfing','Windsurfing','Handball','Lacrosse'];
