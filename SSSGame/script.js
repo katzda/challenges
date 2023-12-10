@@ -46,9 +46,52 @@ function MemoryGame(noChairs = 1){
         sportEl.innerText = person['sport'];
     }
 
-    function UpdateUI_Table(person){
-        // personEl.
-    }
+    function UpdateUI_Table() {
+      tableEl.innerHTML = ''; // Clear the table before updating
+
+      for (var i = 0; i < table.length; i++) {
+          var person = table[i];
+
+          var personDiv = document.createElement('div');
+          personDiv.classList.add('person-row');
+
+          if (person !== null) {
+              var personDetails = document.createElement('div');
+              personDetails.classList.add('person-details');
+
+              var nameSpan = document.createElement('span');
+              nameSpan.innerText = person['name'] + ' of ' + person['countrie'];
+
+              var fruitSpan = document.createElement('span');
+              fruitSpan.innerText = 'Eating a/an ' + person['fruit'];
+
+              var animalSpan = document.createElement('span');
+              animalSpan.innerText = 'Has a/an ' + person['animal'];
+
+              var sportSpan = document.createElement('span');
+              sportSpan.innerText = 'Fan of ' + person['sport'];
+
+              personDetails.appendChild(nameSpan);
+              personDetails.appendChild(document.createElement('br'));
+              personDetails.appendChild(fruitSpan);
+              personDetails.appendChild(document.createElement('br'));
+              personDetails.appendChild(animalSpan);
+              personDetails.appendChild(document.createElement('br'));
+              personDetails.appendChild(sportSpan);
+
+              personDiv.appendChild(personDetails);
+          } else {
+              var emptySeat = document.createElement('div');
+              emptySeat.classList.add('empty-seat');
+              emptySeat.innerText = 'Empty Seat';
+
+              personDiv.appendChild(emptySeat);
+          }
+
+          tableEl.appendChild(personDiv);
+      }
+  }
+  }
 
 
     var nextFreeSeat = 0;
