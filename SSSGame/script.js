@@ -47,52 +47,50 @@ function MemoryGame(noChairs = 1){
     }
 
     function UpdateUI_Table() {
-      tableEl.innerHTML = ''; // Clear the table before updating
+        tableEl.innerHTML = ''; // Clear the table before updating
 
-      for (var i = 0; i < table.length; i++) {
-          var person = table[i];
+        for (var i = 0; i < table.length; i++) {
+            var person = table[i];
 
-          var personDiv = document.createElement('div');
-          personDiv.classList.add('person-row');
+            var personDiv = document.createElement('div');
+            personDiv.classList.add('person-row');
 
-          if (person !== null) {
-              var personDetails = document.createElement('div');
-              personDetails.classList.add('person-details');
+            if (person !== null) {
+                var personDetails = document.createElement('div');
+                personDetails.classList.add('person-details');
 
-              var nameSpan = document.createElement('span');
-              nameSpan.innerText = person['name'] + ' of ' + person['countrie'];
+                var nameSpan = document.createElement('span');
+                nameSpan.innerText = person['name'] + ' of ' + person['countrie'];
 
-              var fruitSpan = document.createElement('span');
-              fruitSpan.innerText = 'Eating a/an ' + person['fruit'];
+                var fruitSpan = document.createElement('span');
+                fruitSpan.innerText = 'Eating a/an ' + person['fruit'];
 
-              var animalSpan = document.createElement('span');
-              animalSpan.innerText = 'Has a/an ' + person['animal'];
+                var animalSpan = document.createElement('span');
+                animalSpan.innerText = 'Has a/an ' + person['animal'];
 
-              var sportSpan = document.createElement('span');
-              sportSpan.innerText = 'Fan of ' + person['sport'];
+                var sportSpan = document.createElement('span');
+                sportSpan.innerText = 'Fan of ' + person['sport'];
 
-              personDetails.appendChild(nameSpan);
-              personDetails.appendChild(document.createElement('br'));
-              personDetails.appendChild(fruitSpan);
-              personDetails.appendChild(document.createElement('br'));
-              personDetails.appendChild(animalSpan);
-              personDetails.appendChild(document.createElement('br'));
-              personDetails.appendChild(sportSpan);
+                personDetails.appendChild(nameSpan);
+                personDetails.appendChild(document.createElement('br'));
+                personDetails.appendChild(fruitSpan);
+                personDetails.appendChild(document.createElement('br'));
+                personDetails.appendChild(animalSpan);
+                personDetails.appendChild(document.createElement('br'));
+                personDetails.appendChild(sportSpan);
 
-              personDiv.appendChild(personDetails);
-          } else {
-              var emptySeat = document.createElement('div');
-              emptySeat.classList.add('empty-seat');
-              emptySeat.innerText = 'Empty Seat';
+                personDiv.appendChild(personDetails);
+            } else {
+                var emptySeat = document.createElement('div');
+                emptySeat.classList.add('empty-seat');
+                emptySeat.innerText = 'Empty Seat';
 
-              personDiv.appendChild(emptySeat);
-          }
+                personDiv.appendChild(emptySeat);
+            }
 
-          tableEl.appendChild(personDiv);
-      }
-  }
-  }
-
+            tableEl.appendChild(personDiv);
+        }
+    }
 
     var nextFreeSeat = 0;
     function Remember(person){
@@ -104,6 +102,7 @@ function MemoryGame(noChairs = 1){
         var person = Generate();
         UpdateUI_Person(person);
         Remember(person);
+        UpdateUI_Table();
     }
 
     this.addChair = function(){
