@@ -10,7 +10,6 @@ function MemoryGame(noChairs = 1){
     InitializeTable();
 
     var tableEl = document.getElementById('table');
-    var personEl = document.getElementById('person');
 
     var nameEl = document.getElementById('name');
     var sportEl = document.getElementById('sport');
@@ -48,7 +47,6 @@ function MemoryGame(noChairs = 1){
 
     function UpdateUI_Table() {
         tableEl.innerHTML = ''; // Clear the table before updating
-        var tableEl = document.createElement('table');
 
         var tableHeadingEl = document.createElement('th');
         var tableHeadingNameEl = document.createElement('td');
