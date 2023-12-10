@@ -44,4 +44,4 @@ The game continues until only one participant remains or until a predetermined e
 
 The last remaining participant or the player with the highest score (fewest "bad points") at the end of the game wins.
 
-https://katzda.github.io/challenges/Boardroom/
+https://katzda.github.io/challenges/SSSGame/
