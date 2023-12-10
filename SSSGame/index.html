@@ -4,18 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personality generator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-    }
-    #result {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-    }
-  </style>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
   <div id="person">
@@ -39,7 +28,11 @@
   </div>
   <button id="generateButton">Generate</button>
 
-  <div id="table">
+
+  <div>
+    <b>Table</b>
+    <div id="table" class="table">
+    </div>
   </div>
 </div>
 
