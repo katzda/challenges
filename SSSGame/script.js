@@ -48,12 +48,12 @@ function MemoryGame(noChairs = 1){
     function UpdateUI_Table() {
         tableEl.innerHTML = ''; // Clear the table before updating
 
-        var tableHeadingEl = document.createElement('th');
-        var tableHeadingNameEl = document.createElement('td');
-        var tableHeadingCountryEl = document.createElement('td');
-        var tableHeadingFruitEl = document.createElement('td');
-        var tableHeadingAnimalEl = document.createElement('td');
-        var tableHeadingSportEl = document.createElement('td');
+        var tableHeadingEl = document.createElement('tr');
+        var tableHeadingNameEl = document.createElement('th');
+        var tableHeadingCountryEl = document.createElement('th');
+        var tableHeadingFruitEl = document.createElement('th');
+        var tableHeadingAnimalEl = document.createElement('th');
+        var tableHeadingSportEl = document.createElement('th');
 
         tableHeadingNameEl.innerText = 'Name';
         tableHeadingCountryEl.innerText = 'Country';
@@ -95,7 +95,6 @@ function MemoryGame(noChairs = 1){
 
             tableEl.appendChild(tableRowEl);
         }
-        tableEl.appendChild(tableEl);
     }
 
     var nextFreeSeat = 0;
