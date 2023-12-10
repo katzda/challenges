@@ -33,14 +33,14 @@ function MemoryGame(noChairs = 1){
             "name": getRandomElement(names),
             "sport": getRandomElement(sports),
             "fruit": getRandomElement(fruits),
-            "countrie": getRandomElement(countries),
+            "country": getRandomElement(countries),
             "animal": getRandomElement(animals)
         };
     }
 
     function UpdateUI_Person(person){
         nameEl.innerText = person['name'];
-        countryEl.innerText = person['countrie'];
+        countryEl.innerText = person['country'];
         fruitEl.innerText = person['fruit'];
         animalEl.innerText = person['animal'];
         sportEl.innerText = person['sport'];
@@ -51,40 +51,19 @@ function MemoryGame(noChairs = 1){
 
         for (var i = 0; i < table.length; i++) {
             var person = table[i];
-
             var personDiv = document.createElement('div');
-            personDiv.classList.add('person-row');
 
             if (person !== null) {
-                var personDetails = document.createElement('div');
-                personDetails.classList.add('person-details');
+                personDiv.innerText =
+                    person['name'] + '|' +
+                    person['country'] + '|' +
+                    person['fruit'] + '|' +
+                    person['animal'] + '|' +
+                    person['sport'];
 
-                var nameSpan = document.createElement('span');
-                nameSpan.innerText = person['name'] + ' of ' + person['countrie'];
-
-                var fruitSpan = document.createElement('span');
-                fruitSpan.innerText = 'Eating a/an ' + person['fruit'];
-
-                var animalSpan = document.createElement('span');
-                animalSpan.innerText = 'Has a/an ' + person['animal'];
-
-                var sportSpan = document.createElement('span');
-                sportSpan.innerText = 'Fan of ' + person['sport'];
-
-                personDetails.appendChild(nameSpan);
-                personDetails.appendChild(document.createElement('br'));
-                personDetails.appendChild(fruitSpan);
-                personDetails.appendChild(document.createElement('br'));
-                personDetails.appendChild(animalSpan);
-                personDetails.appendChild(document.createElement('br'));
-                personDetails.appendChild(sportSpan);
-
-                personDiv.appendChild(personDetails);
+                personDiv.appendChild(person);
             } else {
-                var emptySeat = document.createElement('div');
-                emptySeat.classList.add('empty-seat');
-                emptySeat.innerText = 'Empty Seat';
-
+                personDiv.innerText = '-';
                 personDiv.appendChild(emptySeat);
             }
 
