@@ -60,13 +60,11 @@ function MemoryGame(noChairs = 1){
                     person['fruit'] + '|' +
                     person['animal'] + '|' +
                     person['sport'];
-
-                personDiv.appendChild(person);
             } else {
                 personDiv.innerText = '-';
-                personDiv.appendChild(emptySeat);
             }
 
+            personDiv.appendChild(personDiv);
             tableEl.appendChild(personDiv);
         }
     }
