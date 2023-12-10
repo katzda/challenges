@@ -4,7 +4,7 @@ function MemoryGame(noChairs = 1){
     function InitializeTable(){
         table = [];
         for(var i=0; i<noChairs; i++){
-            table[i] = NULL;
+            table[i] = null;
         }
     }
     InitializeTable();
@@ -64,7 +64,7 @@ function MemoryGame(noChairs = 1){
     }
 
     this.addChair = function(){
-        table[table.length] = NULL;
+        table[table.length] = null;
         nextFreeSeat = table.length - 1;
     }
 }
