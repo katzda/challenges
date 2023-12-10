@@ -48,24 +48,56 @@ function MemoryGame(noChairs = 1){
 
     function UpdateUI_Table() {
         tableEl.innerHTML = ''; // Clear the table before updating
+        var tableEl = document.createElement('table');
+
+        var tableHeadingEl = document.createElement('th');
+        var tableHeadingNameEl = document.createElement('td');
+        var tableHeadingCountryEl = document.createElement('td');
+        var tableHeadingFruitEl = document.createElement('td');
+        var tableHeadingAnimalEl = document.createElement('td');
+        var tableHeadingSportEl = document.createElement('td');
+
+        tableHeadingNameEl.innerText = 'Name';
+        tableHeadingCountryEl.innerText = 'Country';
+        tableHeadingFruitEl.innerText = 'Fruit';
+        tableHeadingAnimalEl.innerText = 'Animal';
+        tableHeadingSportEl.innerText = 'Sport';
+
+        tableHeadingEl.appendChild(tableHeadingNameEl);
+        tableHeadingEl.appendChild(tableHeadingCountryEl);
+        tableHeadingEl.appendChild(tableHeadingFruitEl);
+        tableHeadingEl.appendChild(tableHeadingAnimalEl);
+        tableHeadingEl.appendChild(tableHeadingSportEl);
+
+        tableEl.appendChild(tableHeadingEl);
 
         for (var i = 0; i < table.length; i++) {
             var person = table[i];
-            var personDiv = document.createElement('div');
+
+            var tableRowEl = document.createElement('tr');
+            var tableCellNameEl = document.createElement('td');
+            var tableCellCountryEl = document.createElement('td');
+            var tableCellFruitEl = document.createElement('td');
+            var tableCellAnimalEl = document.createElement('td');
+            var tableCellSportEl = document.createElement('td');
 
             if (person !== null) {
-                personDiv.innerText =
-                    person['name'] + '|' +
-                    person['country'] + '|' +
-                    person['fruit'] + '|' +
-                    person['animal'] + '|' +
-                    person['sport'];
-            } else {
-                personDiv.innerText = '-';
+                tableCellNameEl.innerText = person['name'];
+                tableCellCountryEl.innerText = person['country'];
+                tableCellFruitEl.innerText = person['fruit'];
+                tableCellAnimalEl.innerText = person['animal'];
+                tableCellSportEl.innerText = person['sport'];
             }
 
-            tableEl.appendChild(personDiv);
+            tableRowEl.appendChild(tableCellNameEl);
+            tableRowEl.appendChild(tableCellCountryEl);
+            tableRowEl.appendChild(tableCellFruitEl);
+            tableRowEl.appendChild(tableCellAnimalEl);
+            tableRowEl.appendChild(tableCellSportEl);
+
+            tableEl.appendChild(tableRowEl);
         }
+        tableEl.appendChild(tableEl);
     }
 
     var nextFreeSeat = 0;
