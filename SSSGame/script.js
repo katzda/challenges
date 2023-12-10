@@ -71,4 +71,4 @@ function MemoryGame(noChairs = 1){
 
 var game = new MemoryGame();
 
-document.getElementById('generateButton').addEventListener('click', game.next());
+document.getElementById('generateButton').addEventListener('click', game.next);
