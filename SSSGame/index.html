@@ -7,34 +7,66 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-  <div id="person">
-      <span style="font-weight: bold;" id="name"></span>
-        <span id="name"></span>
-        of
-        <span id="country"></span>
-      </h2>
+  <div class="text-center mb-5">
       <div>
-          Eating a/an
-          <span id="fruit"></span>
+          <label for="seed">Game number:</label>
+          <input id="seed" type="number" class="border border-black"></input>
+          <button id="setSeed" class="bg-gray-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
+            Set Seed
+          </button>
+          <br/>
+          <div id="seedErrorMessage" style="display: none;">Number of digits must not be less than 8</div>
       </div>
-      <div>
-          Has a/an
-          <span id="animal"></span>
+      <div class="flex justify-around">
+          <div>
+              Counter:
+              <span id="round" class="text-4xl"><span></span>
+          </div>
+          <div>
+              <div>
+                  <span style="font-weight: bold;" id="name"></span>
+                  of
+                  <span id="country"></span>
+              </div>
+              <div>
+                  Eating a/an
+                  <span id="fruit"></span>
+              </div>
+              <div>
+                  Has a/an
+                  <span id="animal"></span>
+              </div>
+              <div>
+                  Fan of
+                  <span id="sport"></span>
+              </div>
+          </div>
+          <div>
+          </div>
       </div>
-      <div>
-          Fan of
-          <span id="sport"></span>
-      </div>
+
+      <button id="generateButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Generate
+      </button>
   </div>
-  <button id="generateButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Generate
-  </button>
 
 
-  <div>
-    <b>Table</b>
-    <div id="table" class="table">
-    </div>
+  <div class="text-center">
+      <b>Table (<span id="noChairs"></span> chair)</b>
+      <div id="table" class="table">
+      </div>
+
+      <button id="addChair" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Add chair
+      </button>
+
+      <button id="removeChair" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Remove chair
+      </button>
+
+      <button id="toggleVisibility" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Show/Hide
+      </button>
   </div>
 </div>
 
