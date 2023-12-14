@@ -191,9 +191,7 @@ function MemoryGame() {
 
     this.addChair = function () {
         table[table.length] = null;
-        if (table[nextFreeSeat] != null) {
-            nextFreeSeat = table.length - 1;
-        }
+        nextFreeSeat = table.indexOf(null);
         UpdateUI();
     }
 
