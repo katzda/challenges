@@ -1,6 +1,7 @@
 function MemoryGame() {
 
     let table = [];
+
     let noChairsEl = document.getElementById('noChairs');
     let UpdateUI_NoChairs = function () {
         noChairsEl.innerText = table.length;
@@ -18,6 +19,11 @@ function MemoryGame() {
         tableEl.style.display = isVisible ? 'table' : 'none';
     }
 
+    let toggleCountryEl = document.getElementById('toggleCountry');
+    let toggleFruitEl = document.getElementById('toggleFruit');
+    let toggleAnimalEl = document.getElementById('toggleAnimal');
+    let toggleSportEl = document.getElementById('toggleSport');
+
     function UpdateUI_Table() {
         tableEl.innerHTML = ''; // Clear the table before updating
 
@@ -32,11 +38,17 @@ function MemoryGame() {
 
         tableHeadingNumberEl.classList.add('table-cell');
         tableHeadingNameEl.classList.add('table-cell');
-        tableHeadingCountryEl.classList.add('table-cell');
-        tableHeadingFruitEl.classList.add('table-cell');
-        tableHeadingAnimalEl.classList.add('table-cell');
-        tableHeadingSportEl.classList.add('table-cell');
-        tableHeadingNextSeatPointerEl.classList.add('table-cell');
+        tableHeadingCountryEl.classList.add('table-cell', 'country');
+        tableHeadingFruitEl.classList.add('table-cell', 'fruit');
+        tableHeadingAnimalEl.classList.add('table-cell', 'animal');
+        tableHeadingSportEl.classList.add('table-cell', 'sport');
+
+        tableHeadingCountryEl.style.display = toggleCountryEl.checked ? '' : 'none';
+        tableHeadingFruitEl.style.display = toggleFruitEl.checked ? '' : 'none';
+        tableHeadingAnimalEl.style.display = toggleAnimalEl.checked ? '' : 'none';
+        tableHeadingSportEl.style.display = toggleSportEl.checked ? '' : 'none';
+
+        tableHeadingNextSeatPointerEl.classList.add('table-cell', 'text-left');
 
         tableHeadingNumberEl.innerText = '#';
 
@@ -101,11 +113,16 @@ function MemoryGame() {
 
             tableCellNumberEl.classList.add('table-cell');
             tableCellNameEl.classList.add('table-cell');
-            tableCellCountryEl.classList.add('table-cell');
-            tableCellFruitEl.classList.add('table-cell');
-            tableCellAnimalEl.classList.add('table-cell');
-            tableCellSportEl.classList.add('table-cell');
-            tableCellPointer.classList.add('table-cell');
+            tableCellCountryEl.classList.add('table-cell', 'country');
+            tableCellFruitEl.classList.add('table-cell', 'fruit');
+            tableCellAnimalEl.classList.add('table-cell', 'animal');
+            tableCellSportEl.classList.add('table-cell', 'sport');
+            tableCellPointer.classList.add('table-cell', 'text-left');
+
+            tableCellCountryEl.style.display = toggleCountryEl.checked ? '' : 'none';
+            tableCellFruitEl.style.display = toggleFruitEl.checked ? '' : 'none';
+            tableCellAnimalEl.style.display = toggleAnimalEl.checked ? '' : 'none';
+            tableCellSportEl.style.display = toggleSportEl.checked ? '' : 'none';
 
             tableEl.appendChild(tableRowEl);
         }
@@ -129,17 +146,19 @@ function MemoryGame() {
     };
     let vocabTopics = Object.keys(vocab);
 
-    let toggleCountryEl = document.getElementById('toggleCountry');
-    let toggleFruitEl = document.getElementById('toggleFruit');
-    let toggleAnimalEl = document.getElementById('toggleAnimal');
-    let toggleSportEl = document.getElementById('toggleSport');
     let UpdateUI_ELVisibility = function (obj) {
         var el = obj.target;
         if(obj.tagName == 'LABEL'){
             el = document.getElementById(obj.target.getAttribute('for'));
         }
-        toggledText = document.getElementById(el.dataset['el']).parentNode;
+        let toggledText = document.getElementById(el.dataset['el']).parentNode;
+        let tableELs = document.getElementsByClassName(el.dataset['el']);
+
         toggledText.style.display = el.checked ? '' : 'none';
+
+        for(let i=0; i<tableELs.length; i++){
+            tableELs[i].style.display = el.checked ? '' : 'none';
+        }
     }
     toggleCountryEl.addEventListener('change', UpdateUI_ELVisibility);
     toggleFruitEl.addEventListener('change', UpdateUI_ELVisibility);
@@ -264,11 +283,11 @@ function MemoryGame() {
     let vocabSizes = getVocabSizes();
     let seedEl = document.getElementById('seed');
     let NewGame = function () {
+        table = [];
         table.length = 1;
         step = 0;
         roundNumber = 0;
 
-        table = [];
         for (let i = 0; i < table.length; i++) {
             table[i] = null;
         }
