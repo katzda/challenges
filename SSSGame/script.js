@@ -128,6 +128,24 @@ function MemoryGame() {
         'animal': ['Dog', 'Cat', 'Elephant', 'Lion', 'Tiger', 'Giraffe', 'Zebra', 'Hippopotamus', 'Rhinoceros', 'Gorilla', 'Chimpanzee', 'Bear', 'Panda', 'Koala', 'Kangaroo', 'Cheetah', 'Jaguar', 'Leopard', 'Wolf', 'Fox', 'Deer', 'Moose', 'Elk', 'Bison', 'Yak', 'Camel', 'Alpaca', 'Llama', 'Horse', 'Donkey', 'Mule', 'Goat', 'Sheep', 'Cow', 'Bull', 'Pig', 'Boar', 'Warthog', 'Rhinoceros', 'Hyena', 'Wildebeest', 'Antelope', 'Gazelle', 'Ostrich', 'Emu', 'Flamingo', 'Penguin', 'Toucan', 'Parrot', 'Eagle', 'Hawk', 'Falcon', 'Owl', 'Pelican', 'Seagull', 'Swan', 'Duck', 'Goose', 'Chicken', 'Rooster', 'Pigeon', 'Sparrow', 'Hummingbird', 'Crow', 'Magpie', 'Blue Jay', 'Cardinal', 'Robin', 'Goldfish', 'Clownfish', 'Angelfish', 'Betta fish', 'Swordfish', 'Shark', 'Dolphin', 'Whale', 'Seal', 'Sea lion', 'Walrus', 'Otter', 'Beaver', 'Platypus', 'Crocodile', 'Alligator', 'Turtle', 'Tortoise', 'Snake', 'Lizard', 'Gecko', 'Iguana', 'Chameleon', 'Frog', 'Toad', 'Salamander', 'Newt', 'Tarantula', 'Scorpion', 'Spider', 'Centipede', 'Millipede'],
     };
     let vocabTopics = Object.keys(vocab);
+
+    let toggleCountryEl = document.getElementById('toggleCountry');
+    let toggleFruitEl = document.getElementById('toggleFruit');
+    let toggleAnimalEl = document.getElementById('toggleAnimal');
+    let toggleSportEl = document.getElementById('toggleSport');
+    let UpdateUI_ELVisibility = function (obj) {
+        var el = obj.target;
+        if(obj.tagName == 'LABEL'){
+            el = document.getElementById(obj.target.getAttribute('for'));
+        }
+        toggledText = document.getElementById(el.dataset['el']).parentNode;
+        toggledText.style.display = el.checked ? '' : 'none';
+    }
+    toggleCountryEl.addEventListener('change', UpdateUI_ELVisibility);
+    toggleFruitEl.addEventListener('change', UpdateUI_ELVisibility);
+    toggleAnimalEl.addEventListener('change', UpdateUI_ELVisibility);
+    toggleSportEl.addEventListener('change', UpdateUI_ELVisibility);
+
     let UI_elements = vocabTopics.reduce((acc, cur) => {
         acc[cur] = document.getElementById(cur);
         return acc;
