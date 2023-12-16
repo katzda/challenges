@@ -138,11 +138,11 @@ function MemoryGame() {
     }
 
     let vocab = {
-        'name': ['Jack', 'Emma', 'Liam', 'Olivia', 'Noah', 'Ava', 'Lucas', 'Sophia', 'Ethan', 'Isabella', 'Mason', 'Mia', 'Logan', 'Charlotte', 'Jacob', 'Amelia', 'Aiden', 'Nicole', 'Benjamin', 'Evelyn', 'William', 'Abigail', 'James', 'Emily', 'Oliver', 'Elizabeth', 'Elijah', 'Avery', 'Alexander', 'Sofia', 'Michael', 'Ella', 'Daniel', 'Scarlett', 'Henry', 'Grace', 'Jackson', 'Chloe', 'Sebastian', 'Lily', 'Matthew', 'Addison', 'Samuel', 'Natalie', 'David', 'Victoria', 'Joseph', 'Zoey', 'Carter', 'Penelope', 'Gabriel', 'Layla', 'Luke', 'Riley', 'Anthony', 'Aubrey', 'Isaac', 'Nora', 'Dylan', 'Skylar', 'Wyatt', 'Hannah', 'Andrew', 'Zoey', 'Joshua', 'Brooklyn', 'Christopher', 'Savannah', 'Grayson', 'Audrey', 'Nathan', 'Leah', 'Eli', 'Claire', 'Samuel', 'Stella', 'Owen', 'Agnes', 'Connor', 'Ellie', 'Landon', 'Maya', 'Ryan', 'Violet', 'Isaiah', 'Aria', 'Christian', 'Aurora', 'Hunter', 'Sarah', 'Cameron', 'Caroline', 'Thomas', 'Naomi', 'Charles', 'Anna', 'Julian', 'Samantha', 'Aaron', 'Eliana'],
-        'sport': ['Football', 'Basketball', 'American Football', 'Baseball', 'Tennis', 'Golf', 'Rugby', 'Cricket', 'Volleyball', 'Table Tennis', 'Badminton', 'Hockey', 'Swimming', 'Running', 'Boxing', 'Martial Arts', 'Wrestling', 'Gymnastics', 'Cycling', 'Surfing', 'Skateboarding', 'Snowboarding', 'Skiing', 'Weightlifting', 'Archery', 'Shooting', 'Fencing', 'Diving', 'Sailing', 'Rowing', 'Canoeing/Kayaking', 'Equestrian', 'Triathlon', 'Pole Vault', 'High Jump', 'Long Jump', 'Javelin Throw', 'Hammer Throw', 'Discus Throw', 'Decathlon/Heptathlon', 'Bobsleigh', 'Bungee Jumping', 'Rock Climbing', 'Mountaineering', 'Paragliding', 'Kite Surfing', 'Windsurfing', 'Handball', 'Lacrosse'],
+        'name': ['James','Mary','Robert','Patricia','John','Jennifer','Michael','Linda','David','Elizabeth','William','Barbara','Richard','Susan','Joseph','Jessica','Thomas','Sarah','Christopher','Karen','Charles','Lisa','Daniel','Nancy','Matthew','Betty','Anthony','Sandra','Mark','Margaret','Donald','Ashley','Steven','Kimberly','Andrew','Emily','Paul','Donna','Joshua','Michelle','Kenneth','Carol','Kevin','Amanda','Brian','Melissa','George','Deborah','Timothy','Stephanie','Ronald','Dorothy','Jason','Rebecca','Edward','Sharon','Jeffrey','Laura','Ryan','Cynthia','Jacob','Amy','Gary','Kathleen','Nicholas','Angela','Eric','Shirley','Jonathan','Brenda','Stephen','Emma','Larry','Anna','Justin','Pamela','Scott','Nicole','Brandon','Samantha','Benjamin','Katherine','Samuel','Christine','Gregory','Helen','Alexander','Debra','Patrick','Rachel','Frank','Carolyn','Raymond','Janet','Jack','Maria','Dennis','Catherine','Jerry','Heather','Tyler','Diane','Aaron','Olivia','Jose','Julie','Adam','Joyce','Nathan','Victoria','Henry','Ruth','Zachary','Virginia','Douglas','Lauren','Peter','Kelly','Kyle','Christina','Noah','Joan','Ethan','Evelyn','Jeremy','Judith','Walter','Andrea','Christian','Hannah','Keith','Megan','Roger','Cheryl','Terry','Jacqueline','Austin','Martha','Sean','Madison','Gerald','Teresa','Carl','Gloria','Harold','Sara','Dylan','Janice','Arthur','Ann','Lawrence','Kathryn','Jordan','Abigail','Jesse','Sophia','Bryan','Frances','Billy','Jean','Bruce','Alice','Gabriel','Judy','Joe','Isabella','Logan','Julia','Alan','Grace','Juan','Amber','Albert','Denise','Willie','Danielle','Elijah','Marilyn','Wayne','Beverly','Randy','Charlotte','Vincent','Natalie','Mason','Theresa','Roy','Diana','Ralph','Brittany','Bobby','Doris','Russell','Kayla','Bradley','Alexis','Philip','Lori','Eugene','Marie'],
+        'country': ['India','China','United States','Indonesia','Pakistan','Nigeria','Brazil','Bangladesh','Russia','Mexico','Ethiopia','Japan','Philippines','Egypt','DR Congo','Vietnam','Iran','Turkey','Germany','Thailand','United Kingdom','Tanzania','France','South Africa','Italy','Kenya','Myanmar','Colombia','South Korea','Uganda','Sudan','Spain','Argentina','Algeria','Iraq','Afghanistan','Poland','Canada','Morocco','Saudi Arabia','Ukraine','Angola','Uzbekistan','Yemen','Peru','Malaysia','Ghana','Mozambique','Nepal','Madagascar','Côte dIvoire','Venezuela','Cameroon','Niger','Australia','North Korea','Taiwan','Mali','Burkina Faso','Syria','Sri Lanka','Malawi','Zambia','Romania','Chile','Kazakhstan','Chad','Ecuador','Somalia','Guatemala','Senegal','Netherlands','Cambodia','Zimbabwe','Guinea','Rwanda','Benin','Burundi','Tunisia','Bolivia','Haiti','Belgium','Jordan','Dominican Republic','Cuba','South Sudan','Sweden','Honduras','Czech Republic (Czechia)','Azerbaijan','Greece','Papua New Guinea','Portugal','Hungary','Tajikistan','United Arab Emirates','Belarus','Israel','Togo','Austria','Switzerland','Sierra Leone','Laos','Hong Kong','Serbia','Nicaragua','Libya','Paraguay','Kyrgyzstan','Bulgaria','Turkmenistan','El Salvador','Congo','Singapore','Denmark','Slovakia','Central African Republic','Finland','Norway','Liberia','State of Palestine','Lebanon','New Zealand','Costa Rica','Ireland','Mauritania','Oman','Panama','Kuwait','Croatia','Eritrea','Georgia','Mongolia','Moldova','Uruguay','Puerto Rico','Bosnia and Herzegovina','Albania','Jamaica','Armenia','Gambia','Lithuania','Qatar','Botswana','Namibia','Gabon','Lesotho','Guinea-Bissau','Slovenia','North Macedonia','Latvia','Equatorial Guinea','Trinidad and Tobago','Bahrain','Timor-Leste','Estonia','Mauritius','Cyprus'],
         'fruit': ['Apple', 'Orange', 'Banana', 'Pear', 'Strawberry', 'Grape', 'Blueberry', 'Raspberry', 'Pineapple', 'Watermelon', 'Kiwi', 'Mango', 'Papaya', 'Peach', 'Cherry', 'Plum', 'Lemon', 'Lime', 'Avocado', 'Fig', 'Cranberry', 'Blackberry', 'Cantaloupe', 'Honeydew melon', 'Grapefruit', 'Pomegranate', 'Coconut', 'Passion fruit', 'Lychee', 'Dragon fruit', 'Guava', 'Persimmon', 'Tangerine', 'Nectarine', 'Apricot', 'Jackfruit', 'Star fruit', 'Elderberry', 'Raspberry', 'Boysenberry', 'Mulberry', 'Gooseberry', 'Ackee', 'Plantain', 'Date', 'Quince', 'Rambutan', 'Longan', 'Durian', 'Kiwano'],
-        'country': ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia', 'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Congo', 'Costa Rica', 'Croatia', 'Cuba', 'Cyprus', 'Czechia', 'Democratic Republic of the Congo', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy', 'Ivory Coast', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kosovo', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein'],
         'animal': ['Dog', 'Cat', 'Elephant', 'Lion', 'Tiger', 'Giraffe', 'Zebra', 'Hippopotamus', 'Rhinoceros', 'Gorilla', 'Chimpanzee', 'Bear', 'Panda', 'Koala', 'Kangaroo', 'Cheetah', 'Jaguar', 'Leopard', 'Wolf', 'Fox', 'Deer', 'Moose', 'Elk', 'Bison', 'Yak', 'Camel', 'Alpaca', 'Llama', 'Horse', 'Donkey', 'Mule', 'Goat', 'Sheep', 'Cow', 'Bull', 'Pig', 'Boar', 'Warthog', 'Rhinoceros', 'Hyena', 'Wildebeest', 'Antelope', 'Gazelle', 'Ostrich', 'Emu', 'Flamingo', 'Penguin', 'Toucan', 'Parrot', 'Eagle', 'Hawk', 'Falcon', 'Owl', 'Pelican', 'Seagull', 'Swan', 'Duck', 'Goose', 'Chicken', 'Rooster', 'Pigeon', 'Sparrow', 'Hummingbird', 'Crow', 'Magpie', 'Blue Jay', 'Cardinal', 'Robin', 'Goldfish', 'Clownfish', 'Angelfish', 'Betta fish', 'Swordfish', 'Shark', 'Dolphin', 'Whale', 'Seal', 'Sea lion', 'Walrus', 'Otter', 'Beaver', 'Platypus', 'Crocodile', 'Alligator', 'Turtle', 'Tortoise', 'Snake', 'Lizard', 'Gecko', 'Iguana', 'Chameleon', 'Frog', 'Toad', 'Salamander', 'Newt', 'Tarantula', 'Scorpion', 'Spider', 'Centipede', 'Millipede'],
+        'sport': ['Football', 'Basketball', 'American Football', 'Baseball', 'Tennis', 'Golf', 'Rugby', 'Cricket', 'Volleyball', 'Table Tennis', 'Badminton', 'Hockey', 'Swimming', 'Running', 'Boxing', 'Martial Arts', 'Wrestling', 'Gymnastics', 'Cycling', 'Surfing', 'Skateboarding', 'Snowboarding', 'Skiing', 'Weightlifting', 'Archery', 'Shooting', 'Fencing', 'Diving', 'Sailing', 'Rowing', 'Canoeing/Kayaking', 'Equestrian', 'Triathlon', 'Pole Vault', 'High Jump', 'Long Jump', 'Javelin Throw', 'Hammer Throw', 'Discus Throw', 'Decathlon/Heptathlon', 'Bobsleigh', 'Bungee Jumping', 'Rock Climbing', 'Mountaineering', 'Paragliding', 'Kite Surfing', 'Windsurfing', 'Handball', 'Lacrosse'],
     };
     let vocabTopics = Object.keys(vocab);
 
@@ -172,11 +172,11 @@ function MemoryGame() {
 
     let step = 0;
     function zeroToArrayLengthMinusOne(length, seed) {
-        return ((seed + step) % length);
+        return ((seed * step) % length);
     }
 
     function zeroToArrayLengthMinusOneLess(length, seed) {
-        return ((seed + step + 0.00001) % length);
+        return ((seed * step + 0.00001) % length);
     }
 
     function toRad(length, seed) {
@@ -199,8 +199,8 @@ function MemoryGame() {
 
     let seeds;
     function Generate() {
-        return vocabTopics.reduce((acc, cur, index) => {
-            acc[cur] = getRandomElement(vocab[cur], seeds[index]);
+        return vocabTopics.reduce((acc, cur, index, arr) => {
+            acc[cur] = getRandomElement(vocab[cur], seeds[arr.length - index - 1]);
             return acc;
         }, {});
     }
@@ -240,65 +240,31 @@ function MemoryGame() {
         UpdateUI();
     }
 
-    function calcSeeds(finalNumberOfTheCombination, arraySizes, currentDepth, startingIndex, counter) {
-        if (typeof currentDepth === 'undefined') {
-            currentDepth = 0;
-        }
-        if (typeof startingIndex === 'undefined') {
-            startingIndex = 0;
-        }
-        if (typeof counter === 'undefined') {
-            var counter = 0;
-        }
-        for (let i = startingIndex; i < arraySizes[currentDepth]; i++) {
-            if (currentDepth == arraySizes.length - 1) {
-                if (counter == finalNumberOfTheCombination) {
-                    results = [];
-                    results.length = arraySizes.length;
-                    results[currentDepth] = i;
-                    return results;
-                } else {
-                    counter++;
-                    continue;
-                }
-            } else {
-                let results = calcSeeds(finalNumberOfTheCombination, arraySizes, currentDepth + 1, 0, counter);
-                if (typeof results == 'number') {
-                    counter = results;
-                } else {
-                    results[currentDepth] = i;
-                    return results;
-                }
-            }
-        }
-        if (counter <= finalNumberOfTheCombination) {
-            return counter;
-        }
+    let primes = [7,11,13,17,19];
+    function calcSeeds(gameSeed) {
+        return vocabTopics.map((val, index) => (primes[index] * gameSeed) % vocab[val].length);
     }
 
-    function getVocabSizes() {
-        return vocabTopics.map((topic) => vocab[topic].length);
-    }
-
-    let vocabSizes = getVocabSizes();
     let seedEl = document.getElementById('seed');
     let NewGame = function () {
-        table = [];
-        table.length = 1;
+        if(table.length == 0) {
+            table.length = 1;
+        }
         step = 0;
         roundNumber = 0;
 
         for (let i = 0; i < table.length; i++) {
             table[i] = null;
         }
+        nextFreeSeat = table.indexOf(null);
 
         if (seedEl.value == "") {
-            seedEl.value = Math.floor(Math.random() * 50000);
+            seedEl.value = Math.floor(Math.random() * 500);
         }else{
-            seedEl.value = Math.min(Number.parseInt(seedEl.value), 50000);
+            seedEl.value = Number.parseInt(seedEl.value);
         }
 
-        seeds = calcSeeds(Number.parseInt(seedEl.value), vocabSizes);
+        seeds = calcSeeds(Number.parseInt(seedEl.value));
 
         UpdateUI_Person([]);
         UpdateUI();
