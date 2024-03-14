@@ -32,9 +32,8 @@ services:
       - $APP_ROOT_DIR/web:/var/www/mybusinesswebdir
     networks:
       backend:
-    expose:
-      - 80
-      - 6001
+    ports:
+      - 80:80
 
 secrets:
   env:
