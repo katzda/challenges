@@ -1,3 +1,0 @@
-DEVICE=$(v4l2-ctl --list-devices | grep Arducam_8mp -A 1 | grep /dev | xargs)
-
-fswebcam image.jpg -d $DEVICE
