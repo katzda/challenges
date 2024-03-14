@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  camlapse:
+    container_name: $WEB_HOST
+    hostname: $WEB_HOST
+    restart: unless-stopped
+    healthcheck:
+      test: curl --fail --header 'Host:$URL' http://127.0.0.1 || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    build:
+      context: "."
+      dockerfile: docker/Dockerfile
+      target: dev
+      args:
+        - URL_PROD
+        - URL_QA
+        - URL_DEV
+        - OWNERS_EMAIL
+    environment:
+      - URL
+      - URL_PROD
+      - USER_ID
+      - GROUP_ID
+      - APP_NAME
+      - APP_ENV
+      - OWNERS_EMAIL
+    secrets:
+      - websecrets
+    volumes:
+      - $APP_ROOT_DIR/web:/var/www/mybusinesswebdir
+    networks:
+      backend:
+    expose:
+      - 80
+      - 6001
+
+secrets:
+  websecrets:
+    file: $SECRETS_DIR/web
+
+networks:
+  backend:
+    name: $URL

@@ -1,0 +1,78 @@
+# constants
+# make current script invokable from any directory
+CONSTANTS_FILE_PREV_DIR=$(pwd)
+CONSTANTS_FILE_DIR=$(dirname ${BASH_SOURCE[0]});
+cd $CONSTANTS_FILE_DIR;
+CONSTANTS_FILE_DIR=$(pwd)
+
+################################################
+# defines:                                     #
+#   APP_NAME                                   #
+#   URL                                        #
+#   USER_ID                                    #
+#   GROUP_ID                                   #
+#   DOCKER_BUILDKIT                            #
+#   COMPOSE_IGNORE_ORPHANS                     #
+#   REDIS_HOST                                 #
+#                                              #
+################################################
+
+NGINX_CONFD_VOLUME=risetrees_nginx_confd
+APP_DB_VOLUME_NAME=risetrees_db_data
+APP_REDIS_VOLUME_NAME=risetrees_redis_data
+
+APP_NAME="CamLapse"
+# lowercase app name
+app_name="$(echo "$APP_NAME" | tr '[A-Z]' '[a-z]')"
+
+OWNERS_EMAIL=danekkatz@gmail.com
+DOMAIN=camlapse
+DOMAIN_QA=camlapse
+DOMAIN_LOCAL=camlapse
+
+# APP_ENV MUST be one of local|testing|production because of laravel framework
+APP_ENV=local
+
+URL_PROD=${DOMAIN}.world
+URL_QA=${DOMAIN_QA}.world
+URL_DEV=${DOMAIN_LOCAL}.world
+URL=$URL_DEV
+
+# IS_ENV is "" when called from cert script which doesn't use ./flags script
+if [ "$IS_ENV" = false -o "$IS_ENV" = "" ] || [ "$ENV" = "DEV" ];
+then
+  ENV="DEV";
+  URL=$URL_DEV
+  DOCKER_COMPOSE_FILE="docker-compose-dev.yml";
+else
+  if [ "$ENV" = "PROD" ];
+  then
+    APP_ENV="production"
+    URL=$URL_PROD
+    DOCKER_COMPOSE_FILE="docker-compose-prod.yml";
+  fi;
+
+  if [ "$ENV" = "QA" ];
+  then
+    APP_ENV="production"
+    URL=$URL_QA
+    DOCKER_COMPOSE_FILE="docker-compose-qa.yml";
+  fi;
+fi;
+
+# lowercase
+env="$(echo "$ENV" | tr '[A-Z]' '[a-z]')"
+
+DOCKER_BUILDKIT=1
+COMPOSE_IGNORE_ORPHANS=true;
+
+WEB_HOST=camlapse_$env
+
+USERNAME=$USER;
+USER_ID=$UID
+GROUP_ID=$(id -g)
+
+
+. ./dirs_$env;
+
+cd $CONSTANTS_FILE_PREV_DIR;
