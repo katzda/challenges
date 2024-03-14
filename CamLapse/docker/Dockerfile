@@ -13,30 +13,30 @@ RUN groupadd developer; \
     umask 002 \
     echo umask 002 >> /home/developer/.bashrc
 
-#php 8.2
+#php 8.3
 RUN apt-get update && apt-get install -y \
     lsb-release ca-certificates apt-transport-https software-properties-common -y; \
     add-apt-repository ppa:ondrej/php; \
     apt-get update && apt-get install -y \
-    php8.2 libapache2-mod-php8.2 \
+    php8.3 libapache2-mod-php8.3 \
     php-redis \
-    php8.2-cli \
-    php8.2-curl \
-    php8.2-common \
-    php8.2-mbstring \
-    php8.2-opcache \
-    php8.2-readline \
-    php8.2-xml \
-    php8.2-zip \
-    php8.2-pgsql \
-    php8.2-sqlite3 \
-    php8.2-bcmath \
-    php8.2-intl \
-    php8.2-memcached \
-    php8.2-imap \
-    php8.2-msgpack \
-    php8.2-gd \
-    php8.2-zmq; \
+    php8.3-cli \
+    php8.3-curl \
+    php8.3-common \
+    php8.3-mbstring \
+    php8.3-opcache \
+    php8.3-readline \
+    php8.3-xml \
+    php8.3-zip \
+    php8.3-pgsql \
+    php8.3-sqlite3 \
+    php8.3-bcmath \
+    php8.3-intl \
+    php8.3-memcached \
+    php8.3-imap \
+    php8.3-msgpack \
+    php8.3-gd \
+    php8.3-zmq; \
     apt-get -y autoremove; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
@@ -99,7 +99,7 @@ RUN cd /home/developer; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
 # xdebug
-RUN apt-get update && apt-get install -y php8.2-xdebug
+RUN apt-get update && apt-get install -y php8.3-xdebug
 
 # ARG HOST_IP
 # RUN echo "zend_extension=/usr/lib/php/20220829/xdebug.so\n \
@@ -114,7 +114,7 @@ RUN apt-get update && apt-get install -y php8.2-xdebug
 #          xdebug.remote_enable=on\n \
 #          xdebug.remote_host=$HOST_IP\n \
 #          xdebug.remote_autostart=on \n \
-#          xdebug.remote_port=9900" > /etc/php/8.2/mods-available/xdebug.ini;
+#          xdebug.remote_port=9900" > /etc/php/8.3/mods-available/xdebug.ini;
 
 #REPEATED SECTION FROM HERE
 USER root
@@ -123,7 +123,7 @@ COPY ./docker/artifacts/supervisor/apache2d.conf /etc/supervisor/conf.d/apache2d
 COPY ./docker/artifacts/supervisor/horizon.conf /etc/supervisor/conf.d/horizon.conf
 RUN chmod 544 /usr/bin/entrypoint.sh;
 
-RUN sudo apt-get install v4l-utils
+RUN apt-get update && apt-get install -y v4l-utils
 
 ENV APP_DEBUG true
 ENTRYPOINT ["entrypoint.sh"]

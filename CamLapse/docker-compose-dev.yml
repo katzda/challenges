@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  camlapse:
+  app:
     container_name: $WEB_HOST
     hostname: $WEB_HOST
     restart: unless-stopped

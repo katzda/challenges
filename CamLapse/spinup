@@ -12,15 +12,14 @@ set -a  # begin exporting all constants automatically
 . ./properties/constants true $@;
 set +a  # stop exporting all constants automatically
 
-cd $CD_DIR; # cd into the concrete project
-
 if [ -f "./$DOCKER_COMPOSE_FILE" ]; then
     [[ $VOLUMES = "true" ]] && options+=" --volumes";
 
-    docker-compose -f "$DOCKER_COMPOSE_FILE" down ${options[@]};
+    docker compose -f "$DOCKER_COMPOSE_FILE" down ${options[@]};
     [[ $VOLUMES = true ]] && docker volume rm $(docker volume ls -qf dangling=true) 2>/dev/null
 
-    docker-compose -f "$DOCKER_COMPOSE_FILE" up --force-recreate -d --no-build;
+    docker compose -f "$DOCKER_COMPOSE_FILE" up --force-recreate -d --no-build;
 fi;
+echo "$DOCKER_COMPOSE_FILE";
 
 cd $INSTALL_FILE_PREV_DIR;
