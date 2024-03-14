@@ -120,7 +120,6 @@ RUN apt-get update && apt-get install -y php8.3-xdebug
 USER root
 COPY ./docker/entrypoint.sh /usr/bin/entrypoint.sh
 COPY ./docker/artifacts/supervisor/apache2d.conf /etc/supervisor/conf.d/apache2d.conf
-COPY ./docker/artifacts/supervisor/horizon.conf /etc/supervisor/conf.d/horizon.conf
 RUN chmod 544 /usr/bin/entrypoint.sh;
 
 RUN apt-get update && apt-get install -y v4l-utils
@@ -155,7 +154,6 @@ RUN composer install --no-dev --no-interaction --optimize-autoloader; \
     npm install; \
     npm run prod; \
     composer dump-autoload; \
-    php artisan horizon:publish; \
     php artisan livewire:publish --assets;
 
 ########
@@ -180,7 +178,6 @@ RUN chmod 775 /var/www/mybusinesswebdir;
 #REPEATED SECTION FROM HERE
 COPY ./docker/entrypoint.sh /usr/bin/entrypoint.sh
 COPY ./docker/artifacts/supervisor/apache2d.conf /etc/supervisor/conf.d/apache2d.conf
-COPY ./docker/artifacts/supervisor/horizon.conf /etc/supervisor/conf.d/horizon.conf
 RUN chmod 544 /usr/bin/entrypoint.sh;
 
 ENV APP_DEBUG false

@@ -6,6 +6,8 @@ BUILD_FILE_DIR=$(dirname ${BASH_SOURCE[0]});
 cd $BUILD_FILE_DIR;
 BUILD_FILE_DIR=$(pwd)
 
+echo "Running './build $*'"
+
 set -a  # begin exporting all constants automatically
 . ./properties/constants true $@;
 set +a  # stop exporting all constants automatically

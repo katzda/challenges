@@ -4,7 +4,6 @@ services:
   app:
     container_name: $WEB_HOST
     hostname: $WEB_HOST
-    restart: unless-stopped
     healthcheck:
       test: curl --fail --header 'Host:$URL' http://127.0.0.1 || exit 1
       interval: 10s
@@ -28,7 +27,7 @@ services:
       - APP_ENV
       - OWNERS_EMAIL
     secrets:
-      - websecrets
+      - env
     volumes:
       - $APP_ROOT_DIR/web:/var/www/mybusinesswebdir
     networks:
@@ -38,8 +37,8 @@ services:
       - 6001
 
 secrets:
-  websecrets:
-    file: $SECRETS_DIR/web
+  env:
+    file: $SECRETS_DIR/.env
 
 networks:
   backend:
