@@ -1,0 +1,96 @@
+// ==UserScript==
+// @name         remove weirdlishism on learnkorean24
+// @namespace    http://tampermonkey.net/
+// @version      2024-02-08
+// @description  try to take over the world!
+// @author       You
+// @match        https://learnkorean24.com/korean-verbs-list/
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=learnkorean24.com
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    window.addEventListener('load', function() {
+        // remove weirdlishism
+        document.querySelectorAll('table td:first-child').forEach(function(td){td.innerText = td.innerText.replace(/(.*) +\[.*\]/,'$1');})
+
+        // remove adds
+        document.querySelectorAll('.ezoic-adpicker-ad,.adtester-container, [data-ez-ph-id]').forEach(function(el){el.remove();})
+
+        // remove download worksheets links
+        document.querySelectorAll(".wp-block-image, [id*='worksheet'], .wp-block-kadence-advancedbtn").forEach(function(el){el.remove();});
+
+
+        var container = document.createElement("div");
+        container.style.position = "fixed";
+        container.style.top = "0";
+        container.style.left = "0";
+        container.style.width = "100%";
+        container.style.background = "#fff";
+        container.style.padding = "10px";
+        container.style.zIndex = "9999";
+
+        var inputField = document.createElement("input");
+        inputField.type = "number";
+        inputField.value = 1;
+        inputField.placeholder = "Number of columns";
+        inputField.id = "columnInput";
+        inputField.style.marginRight = "10px";
+
+        // Create button to trigger table creation
+        var createButton = document.createElement("button");
+        createButton.textContent = "Create Table";
+        createButton.id = "createTableButton";
+
+        // Append input field and button to the container div
+        container.appendChild(inputField);
+        container.appendChild(createButton);
+        container.classList.add('no-print');
+
+        // Append container div to the body
+        document.body.appendChild(container.cloneNode(true));
+
+        var tables_a = document.querySelectorAll('table');
+
+        // Function to create table
+        function createTable() {
+            let numColumns = parseInt(document.getElementById("columnInput").value) ?? 1;
+            let cells = [];
+
+            if (numColumns > 0) {
+                var table = document.createElement("table");
+
+                var row = table.insertRow();
+                for (let i = 0; i < numColumns; i++) {
+                    cells[i] = row.insertCell();
+                    cells[i].style.verticalAlign = "top";
+                }
+
+                document.head.innerHTML = '';
+                document.body.innerHTML = '';
+                let style = document.createElement('style');
+                let css = '@media print { .no-print { display: none; } }';
+                style.appendChild(document.createTextNode(css));
+                document.head.appendChild(style);
+
+                document.body.appendChild(container.cloneNode(true));
+                document.body.appendChild(table);
+            }
+
+            let noTablePerCell = Math.round(tables_a.length / numColumns);
+
+            for (let i = 0; i < numColumns; i++) {
+
+                for (let j = i*noTablePerCell; j < noTablePerCell*(i+1) /*|| printRemainder*/; j++) {
+                    var printRemainder = i == (numColumns -1) && j < tables_a.length;
+                    cells[i].appendChild(tables_a[j]);
+                }
+            }
+        }
+
+        document.getElementById("createTableButton").addEventListener("click", createTable);
+
+    }, false);
+})();
