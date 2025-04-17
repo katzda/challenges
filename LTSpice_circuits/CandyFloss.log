@@ -1,0 +1,4 @@
+Circuit: * Z:\n\dev\challenges\LTSpice_circuits\CandyFloss.asc
+
+Fatal Error: Unknown subcircuit called in:
+   xu2 n004 n003 diac
