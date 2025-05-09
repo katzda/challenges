@@ -1,0 +1,25 @@
+Circuit: * Z:\n\dev\challenges\LTSpice_circuits\working-amplifier.asc
+
+Warning: Multiple definitions of model "2scr375p" Type: BJT
+Warning: Multiple definitions of model "bc857b" Type: BJT
+Warning: Multiple definitions of model "bc847c" Type: BJT
+Warning: Multiple definitions of model "bc847b" Type: BJT
+Direct Newton iteration for .op point succeeded.
+
+Date: Sat Oct 12 22:51:44 2024
+Total elapsed time: 0.087 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 2116
+traniter = 2105
+tranpoints = 1046
+accept = 1045
+rejected = 1
+matrix size = 23
+fillins = 0
+solver = Normal
+Matrix Compiler1: 1.58 KB object code size  0.3/0.3/[0.3]
+Matrix Compiler2: off  [0.3]/0.4/0.3
+
