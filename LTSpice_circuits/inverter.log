@@ -1,0 +1,15 @@
+LTspice 24.1.7 for Windows
+Circuit: Z:\n\dev\challenges\LTSpice_circuits\inverter.net
+Start Time: Sat Aug  2 14:50:49 2025
+solver = Normal
+Maximum thread count: 8
+tnom = 27
+temp = 27
+method = trap
+Direct Newton iteration for .op point succeeded.
+Total elapsed time: 0.120 seconds.
+
+Files loaded:
+Z:\n\dev\challenges\LTSpice_circuits\inverter.net
+C:\users\katzda\AppData\Local\LTspice\lib\cmp\standard.mos
+

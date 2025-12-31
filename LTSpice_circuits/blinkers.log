@@ -1,0 +1,8 @@
+LTspice 24.1.7 for Windows
+Circuit: Z:\n\dev\challenges\LTSpice_circuits\blinkers.net
+Start Time: Thu Jun  5 18:32:23 2025
+solver = Normal
+Maximum thread count: 8
+tnom = 27
+temp = 27
+method = trap
