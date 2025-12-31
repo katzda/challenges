@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>한국어 발음</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <textarea id="floatingNote" class="floating-note"></textarea>
+
+  <div id="topButtons">
+    <button id="resetBtn">Reset Highlights</button>
+    <button id="exportBtn">Export Highlights</button>
+  </div>
+
+  <div id="grid"></div>
+
+  <div id="greenNotes">
+  <h2>Same pronounciation notes</h2>
+
+  <div class="green-note" data-green="1">
+    <strong>Green</strong>
+    <div class="green-note-text"></div>
+  </div>
+
+  <div class="green-note" data-green="2">
+    <strong>Yellow</strong>
+    <div class="green-note-text"></div>
+  </div>
+
+  <div class="green-note" data-green="3">
+    <strong>Blue</strong>
+    <div class="green-note-text"></div>
+  </div>
+</div>
+
+
+  <div id="notes">
+    <h2>Red objections</h2>
+    <ul id="notesList"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

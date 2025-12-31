@@ -1,0 +1,199 @@
+body {
+  margin: 0;
+  padding: 10px;
+  background: #111;
+  color: #eee;
+  font-family: system-ui, sans-serif;
+}
+
+#grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-x: auto; /* allows horizontal scroll */
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(21, minmax(40px, 1fr)); /* min width 40px */
+}
+
+.cell {
+  position: relative;
+  font-size: 16px;
+  border: 1px solid #333;
+  background: #1a1a1a;
+  cursor: pointer;
+  user-select: none;
+  padding: 2px 0;
+  text-align: center;
+  overflow: hidden; /* prevents letters from overflowing */
+  white-space: nowrap; /* letters don’t wrap */
+}
+
+.cell:hover {
+  background: #2a2a2a;
+}
+
+.cell:active {
+  background: #444;
+}
+
+/* tiny marker */
+.marker {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid #555;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* red background for the cell */
+.cell.highlight {
+  background: #3a1a1a;
+}
+
+/* red highlight affects only red marker */
+.cell.highlight .marker.red {
+  background: #cc3333;
+  border-color: #cc3333;
+}
+
+/* green highlight affects only green marker */
+.cell.green .marker.green {
+  background: #3fa63f;
+  border-color: #3fa63f;
+}
+
+.reference-row {
+  opacity: 0.9;
+}
+
+.row-spacer {
+  height: 10px;
+}
+
+/* cell bottom border can also reflect state if desired */
+.cell.green-1 { border-bottom: 3px solid #3fa63f; }
+.cell.green-2 { border-bottom: 3px solid #d4a700; }
+.cell.green-3 { border-bottom: 3px solid #0063d4; }
+
+/* red marker top-right */
+.marker.red {
+  top: 1px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  background: transparent;
+  border: 1px solid #555;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+}
+
+.marker.green {
+  bottom: 1px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  top: auto;
+  background: transparent;
+  border: 1px solid #555;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+}
+
+.cell.green-1 .marker.green {
+  background: #3fa63f;
+  border-color: #3fa63f;
+}
+
+.cell.green-2 .marker.green {
+  background: #d4a700;
+  border-color: #d4a700;
+}
+
+.cell.green-3 .marker.green {
+  background: #0063d4;
+  border-color: #0063d4;
+}
+
+.note-tooltip {
+  position: absolute;
+  z-index: 10;
+  width: 200px;        /* wider */
+  height: 80px;        /* taller */
+  font-size: 14px;
+  resize: both;
+  padding: 4px;
+  margin-top: 4px;
+  display: none;
+}
+.cell {
+  position: relative; /* required for absolute positioning of note */
+}
+
+.floating-note {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  border: 1px solid #888;
+  border-radius: 3px;
+  font-family: inherit;
+}
+.cell {
+  position: relative; /* needed for markers */
+}
+
+.green-note {
+  margin-bottom: 8px;
+}
+
+.green-note-text {
+  cursor: pointer;
+  padding: 4px;
+  border: 1px solid transparent;
+}
+
+.green-note-text:hover {
+  border-color: #aaa;
+}
+
+.green-note-editor {
+  width: 100%;
+  font-size: inherit;
+}
+/* Top buttons container */
+#topButtons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* Style for both buttons */
+#resetBtn,
+#exportBtn {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #222;
+  color: #eee;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#resetBtn:hover,
+#exportBtn:hover {
+  background-color: #333;
+  border-color: #888;
+}
+
+#resetBtn:active,
+#exportBtn:active {
+  background-color: #444;
+}
