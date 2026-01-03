@@ -47,6 +47,9 @@ class JamoWord:
                 out.append(j)
         return "".join(out)
 
+    def get_c(self, jamo_list, j):
+        return jamo_list[j] if j < len(jamo_list) else None
+
     def compose(self, jamo_list: str, debug: bool=False) -> str:
         out = []
         i = 0
@@ -57,21 +60,11 @@ class JamoWord:
             last_valid_syllable = False
             substr = ""
 
-            j = i
+            c3_i = i + 2
+            c4_i = i + 3
+            c1, c2, c3, c4, c5 = (self.get_c(jamo_list, j) for j in range(i, i+5))
 
-            c1_i = j
-            c2_i = j + 1
-            c3_i = j + 2
-            c4_i = j + 3
-            c5_i = j + 4
-
-            c1 = jamo_list[c1_i]
-            c2 = jamo_list[c2_i]
-            c3 = jamo_list[c3_i] if c3_i < len(jamo_list) else None
-            c4 = jamo_list[c4_i] if c4_i < len(jamo_list) else None
-            c5 = jamo_list[c5_i] if c5_i < len(jamo_list) else None
-
-            if debug: print(jamo_list[j:])
+            if debug: print(jamo_list[i:])
 
             is_current_vowel = c2 in self.VOWELS
             is_c2_vowel = None
