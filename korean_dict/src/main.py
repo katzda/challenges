@@ -7,39 +7,56 @@ from wcwidth import wcswidth
 def clean(text):
     return re.sub(r"[^가-힣ㄱ-ㅎㅏ-ㅣ]", "", text)
 
-def pprintn(array):
+def printn(dictionary, skip: int, noskip: int):
     jamo = JamoWord()
+    keys = list(dictionary)
 
-    idx_width = len(str(len(array))) + 1
+    total = len(keys)
 
-    # compute REAL display width
-    jamo_col_width = max(wcswidth(txt) for txt in array) + 2
+    if skip == -1:
+        start = max(total - noskip, 0)
+    else:
+        start = min(skip, total)
 
-    for i, txt in enumerate(array, 1):
+    end = min(start + noskip, total)
+    slice_keys = keys[start:end]
+
+    if not slice_keys:
+        return
+
+    idx_width = len(str(end)) + 1
+    jamo_col_width = max(wcswidth(k) for k in slice_keys)
+
+    for i, txt in enumerate(slice_keys, start + 1):
         pad = jamo_col_width - wcswidth(txt)
         print(
             f"{i:{idx_width}d}. "
-            f"{txt}{' ' * pad}"
+            f"{txt}{' ' * pad}  "
             f"{jamo.compose(txt)}"
+            f"\t {dictionary[txt]}"
         )
 
-def build_vocab(file):
-    hangul_map = {} # map ensures uniqeness
+def build_vocab(file_path, hangul_map=None):
+    if hangul_map is None:
+        hangul_map = {}
+
+    jamo = JamoWord()
+
     try:
-        file = open(file)
-    except:
-        print("File not found")
-        return []
-    else:
-        jamo = JamoWord()
-        for sentence in file:
-            words = sentence.split(" ")
-            for word in words:
-                clean_word = clean(word)
-                jamo_s = jamo.decompose(clean_word)
-                hangul_map[jamo_s] = None
-        file.close()
-    return list(hangul_map)
+        with open(file_path, "r") as f:
+            for sentence in f:
+                for word in sentence.split():
+                    clean_word = clean(word)
+                    if not clean_word:
+                        continue
+
+                    jamo_s = jamo.decompose(clean_word)
+                    hangul_map[jamo_s] = hangul_map.get(jamo_s, 0) + 1
+
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+
+    return hangul_map
 
 dictionary = build_vocab("./data/subtitles/ko.txt")
-pprintn(dictionary)
+printn(dictionary, 0, 10)
