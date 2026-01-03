@@ -36,7 +36,6 @@ def build_vocab(file):
             words = sentence.split(" ")
             for word in words:
                 clean_word = clean(word)
-                # print(clean_word)
                 jamo_s = jamo.decompose(clean_word)
                 hangul_map[jamo_s] = None
         file.close()
