@@ -64,6 +64,7 @@ class JamoWord:
             last_valid_syllable = False
             substr = ""
 
+            c2_i = i + 2
             c3_i = i + 2
             c4_i = i + 3
             c1, c2, c3, c4, c5 = (self.get_c(jamo_list, j) for j in range(i, i+5))
