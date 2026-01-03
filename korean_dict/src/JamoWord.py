@@ -47,14 +47,12 @@ class JamoWord:
                 out.append(j)
         return "".join(out)
 
-    def compose(self, jamo_stream: str, debug: bool=False) -> str:
+    def compose(self, jamo_list: str, debug: bool=False) -> str:
         out = []
         i = 0
-        length = len(jamo_stream)
+        jamo_list = list(jamo_list)
 
-        # print("out:".join(out)+",i:"+str(i)+",length:" + str(length))
-
-        while i < length:
+        while i < len(jamo_list):
             do_append = False
             last_valid_syllable = False
             substr = ""
@@ -67,22 +65,22 @@ class JamoWord:
             c4_i = j + 3
             c5_i = j + 4
 
-            c1 = jamo_stream[c1_i]
-            c2 = jamo_stream[c2_i]
-            c3 = jamo_stream[c3_i] if c3_i < length else None
-            c4 = jamo_stream[c4_i] if c4_i < length else None
-            c5 = jamo_stream[c5_i] if c5_i < length else None
+            c1 = jamo_list[c1_i]
+            c2 = jamo_list[c2_i]
+            c3 = jamo_list[c3_i] if c3_i < len(jamo_list) else None
+            c4 = jamo_list[c4_i] if c4_i < len(jamo_list) else None
+            c5 = jamo_list[c5_i] if c5_i < len(jamo_list) else None
 
-            if debug: print(jamo_stream[j:])
+            if debug: print(jamo_list[j:])
 
             is_current_vowel = c2 in self.VOWELS
             is_c2_vowel = None
 
-            if c3_i == length:
+            if c3_i == len(jamo_list):
                 out.append(j2h(c1,c2))
                 break
 
-            c3 = jamo_stream[c3_i]
+            c3 = jamo_list[c3_i]
             is_c2_vowel = c3 in self.VOWELS
 
             # COMPOSE AS 2 VOWELS or 2 FINAL CONSONANTS
@@ -95,8 +93,8 @@ class JamoWord:
 
                 if debug: print("new_vowel: "+new_vowel)
 
-                jamo_stream = jamo_stream[:c2_i] + new_vowel + jamo_stream[c3_i+1:]
-                length -= 1
+                jamo_list[c2_i] = new_vowel
+                jamo_list.pop(c3_i)
                 continue
 
             is_c3_vowel = c3 in self.VOWELS if c3 != None else None
@@ -117,8 +115,8 @@ class JamoWord:
 
                 if debug: print("new_consonant: "+new_consonant)
 
-                jamo_stream = jamo_stream[:c3_i] + new_consonant + jamo_stream[c4_i+1:]
-                length -= 1
+                jamo_list[c3_i] = new_consonant
+                jamo_list.pop(c4_i)
                 continue
 
             # At least I know that I can try all cases without compound combinations
