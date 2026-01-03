@@ -2,20 +2,28 @@
 
 from JamoWord import JamoWord
 import re
+from wcwidth import wcswidth
 
 def clean(text):
     return re.sub(r"[^가-힣ㄱ-ㅎㅏ-ㅣ]", "", text)
 
-def pprintn(array, no_lines):
-    cnt = 0
+def pprintn(array):
     jamo = JamoWord()
-    for txt in array:
-        print(f"{txt} -> {jamo.compose(txt)}");
-        if cnt == no_lines: break;
-        else: cnt += 1
+
+    idx_width = len(str(len(array))) + 1
+
+    # compute REAL display width
+    jamo_col_width = max(wcswidth(txt) for txt in array) + 2
+
+    for i, txt in enumerate(array, 1):
+        pad = jamo_col_width - wcswidth(txt)
+        print(
+            f"{i:{idx_width}d}. "
+            f"{txt}{' ' * pad}"
+            f"{jamo.compose(txt)}"
+        )
 
 def build_vocab(file):
-    line = 1
     hangul_map = {} # map ensures uniqeness
     try:
         file = open(file)
@@ -31,12 +39,8 @@ def build_vocab(file):
                 # print(clean_word)
                 jamo_s = jamo.decompose(clean_word)
                 hangul_map[jamo_s] = None
-            if line == 10:
-                break
-            else:
-                line+=1
         file.close()
     return list(hangul_map)
 
 dictionary = build_vocab("./data/subtitles/ko.txt")
-pprintn(dictionary, 100)
+pprintn(dictionary)
