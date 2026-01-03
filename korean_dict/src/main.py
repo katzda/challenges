@@ -6,20 +6,11 @@ import re
 def clean(text):
     return re.sub(r"[^가-힣ㄱ-ㅎㅏ-ㅣ]", "", text)
 
-def printn(array, no_lines):
-    cnt = 0
-    jamo = JamoWord()
-    for txt in array:
-        print(txt);
-        if cnt == no_lines: break;
-        else: cnt += 1
-
 def pprintn(array, no_lines):
     cnt = 0
     jamo = JamoWord()
     for txt in array:
-        txt = jamo.compose(txt)
-        print(txt);
+        print(f"{txt} -> {jamo.compose(txt)}");
         if cnt == no_lines: break;
         else: cnt += 1
 
@@ -48,6 +39,4 @@ def build_vocab(file):
     return list(hangul_map)
 
 dictionary = build_vocab("./data/subtitles/ko.txt")
-printn(dictionary, 100)
-print("\n")
 pprintn(dictionary, 100)
