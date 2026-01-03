@@ -50,6 +50,10 @@ class JamoWord:
     def get_c(self, jamo_list, j):
         return jamo_list[j] if j < len(jamo_list) else None
 
+    def dbg(self,debug,msg):
+        if debug:
+            print(msg)
+
     def compose(self, jamo_list: str, debug: bool=False) -> str:
         out = []
         i = 0
@@ -64,7 +68,7 @@ class JamoWord:
             c4_i = i + 3
             c1, c2, c3, c4, c5 = (self.get_c(jamo_list, j) for j in range(i, i+5))
 
-            if debug: print(jamo_list[i:])
+            self.dbg(debug,jamo_list[i:])
 
             is_current_vowel = c2 in self.VOWELS
             is_c2_vowel = None
@@ -80,11 +84,11 @@ class JamoWord:
             is_compound_vowel = is_c2_vowel and (c2, c3) in self.COMPOSE_MAP
 
             if is_compound_vowel:
-                if debug: print(f"var1: {c2} var2: {c3}")
+                self.dbg(debug,f"var1: {c2} var2: {c3}")
 
                 new_vowel = self.COMPOSE_MAP[(c2, c3)]
 
-                if debug: print("new_vowel: "+new_vowel)
+                self.dbg(debug,"new_vowel: "+new_vowel)
 
                 jamo_list[c2_i] = new_vowel
                 jamo_list.pop(c3_i)
@@ -102,11 +106,11 @@ class JamoWord:
             )
 
             if is_compound_final_consonant:
-                if debug: print(f"var1: {c3} var2: {c4}")
+                self.dbg(debug,f"var1: {c3} var2: {c4}")
 
                 new_consonant = self.COMPOSE_MAP[(c3, c4)]
 
-                if debug: print("new_consonant: "+new_consonant)
+                self.dbg(debug,"new_consonant: "+new_consonant)
 
                 jamo_list[c3_i] = new_consonant
                 jamo_list.pop(c4_i)
@@ -121,20 +125,20 @@ class JamoWord:
 
             #1 end of the word!
             if c3 == None:
-                if debug: print("#1")
+                self.dbg(debug,"#1")
                 out.append(j2h(c1,c2))
                 break
 
             #2 end of the word!
             if c4 == None:
-                if debug: print("#2")
+                self.dbg(debug,"#2")
                 out.append(j2h(c1,c2,c3))
                 break
 
             #3 new syllable!
             is_c4_vowel = c4 in self.VOWELS
             if is_c4_vowel:
-                if debug: print(f"#3 {c1} {c2}")
+                self.dbg(debug,f"#3 {c1} {c2}")
                 out.append(j2h(c1,c2))
                 i += 2
                 continue
@@ -142,7 +146,7 @@ class JamoWord:
             #4 new syllable!
             is_c5_vowel = c5 in self.VOWELS
             if is_c5_vowel:
-                if debug: print("#5")
+                self.dbg(debug,"#5")
                 out.append(j2h(c1,c2,c3))
                 i += 3
                 continue
