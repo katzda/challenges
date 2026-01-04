@@ -70,6 +70,33 @@ def sort_by_key(vocab: Dict[str, int], reverse: bool = False) -> List[Tuple[str,
     """Sort by key (jamo string). reverse=False → ascending alphabetical."""
     return sorted(vocab.items(), key=lambda kv: kv[0], reverse=reverse)
 
+def sort_by_key_length_then_alpha(vocab: dict[str, int], reverse: bool = False):
+    return sorted(
+        vocab.items(),
+        key=lambda kv: (len(kv[0]), kv[0]),
+        reverse=reverse
+    )
+
+CONSONANTS = [
+    "ㅇ", "ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ",
+    "ㅅ", "ㅆ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ",
+]
+VOWELS = [
+    "ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ",
+    "ㅗ", "ㅛ", "ㅜ", "ㅠ", "ㅡ", "ㅣ",
+]
+CUSTOM_JAMO_ORDER = CONSONANTS + VOWELS
+JAMO_RANK = {j: i for i, j in enumerate(CUSTOM_JAMO_ORDER)}
+
+def jamo_sort_key(s: str):
+    return tuple(JAMO_RANK.get(ch, 10_000) for ch in s)
+def sort_by_length_then_custom_alpha(vocab: dict[str, int], reverse: bool = False):
+    return sorted(
+        vocab.items(),
+        key=lambda kv: (len(kv[0]), jamo_sort_key(kv[0])),
+        reverse=reverse
+    )
+
 def build_vocab(file_path, hangul_map=None):
     if hangul_map is None:
         hangul_map = {}
@@ -94,5 +121,5 @@ def build_vocab(file_path, hangul_map=None):
 
 dictionary = build_vocab("./data/subtitles/ko.txt")
 
-printn(sort_by_freq(dictionary), 0, 20)
+printn(sort_by_length_then_custom_alpha(dictionary), 0, 100)
 # printn(dictionary, 0, 20)
