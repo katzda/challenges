@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hangul Dictionary Prototype</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="sidebar">
+    <h3>Sort / Bookmarks</h3>
+    <select id="sortSelect">
+      <option value="by_frequency">Frequency</option>
+      <option value="by_alphabet">Alphabet</option>
+      <option value="by_length">Length</option>
+    </select>
+    <div id="bookmarks"></div>
+  </div>
+
+  <div id="main">
+    <div id="pageLeft" class="page"></div>
+    <div id="pageRight" class="page"></div>
+    <div id="controls">
+      <button id="prevBtn">Prev</button>
+      <button id="nextBtn">Next</button>
+    </div>
+  </div>
+
+<script src="main.js"></script>
+</body>
+</html>
