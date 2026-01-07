@@ -153,3 +153,8 @@ function jumpToLength(l) {
     if (idx !== -1) currentIndex = idx;
     renderPages();
 }
+function tts(word){
+    const u = new SpeechSynthesisUtterance(word);
+    u.lang = "ko-KR";
+    speechSynthesis.speak(u);
+}

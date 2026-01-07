@@ -40,16 +40,18 @@ class JamoWord:
 
     # ---------- public API ----------
 
-    def decompose(self, word: str) -> str:
+    @staticmethod
+    def decompose(word: str) -> str:
         jamo = j2hcj(h2j(word))
         result: List[str] = []
 
         for char in jamo:
-            result.extend(self.DECOMPOSE_MAP.get(char, (char,)))
+            result.extend(JamoWord.DECOMPOSE_MAP.get(char, (char,)))
 
         return "".join(result)
 
-    def compose(self, jamo: Iterable[str], debug: bool = False) -> str:
+    @staticmethod
+    def compose(jamo: Iterable[str], debug: bool = False) -> str:
         jamo = list(jamo)
         out: List[str] = []
         i = 0
@@ -59,31 +61,31 @@ class JamoWord:
                 print(msg)
 
         while i < len(jamo):
-            c1 = self._safe_get(jamo, i)
-            c2 = self._safe_get(jamo, i + 1)
-            c3 = self._safe_get(jamo, i + 2)
-            c4 = self._safe_get(jamo, i + 3)
-            c5 = self._safe_get(jamo, i + 4)
+            c1 = JamoWord._safe_get(jamo, i)
+            c2 = JamoWord._safe_get(jamo, i + 1)
+            c3 = JamoWord._safe_get(jamo, i + 2)
+            c4 = JamoWord._safe_get(jamo, i + 3)
+            c5 = JamoWord._safe_get(jamo, i + 4)
 
             dbg(jamo[i:])
 
             # --- compose compound vowel (중성 결합) ---
-            if self._is_vowel(c2) and self._is_vowel(c3):
+            if JamoWord._is_vowel(c2) and JamoWord._is_vowel(c3):
                 pair = (c2, c3)
-                if pair in self.COMPOSE_MAP:
-                    jamo[i + 1] = self.COMPOSE_MAP[pair]
+                if pair in JamoWord.COMPOSE_MAP:
+                    jamo[i + 1] = JamoWord.COMPOSE_MAP[pair]
                     jamo.pop(i + 2)
                     dbg(f"compound vowel: {pair} -> {jamo[i+1]}")
                     continue
 
             # --- compose compound final consonant (종성 결합) ---
             if (
-                not self._is_vowel(c3)
-                and not self._is_vowel(c4)
-                and not self._is_vowel(c5)
-                and (c3, c4) in self.COMPOSE_MAP
+                not JamoWord._is_vowel(c3)
+                and not JamoWord._is_vowel(c4)
+                and not JamoWord._is_vowel(c5)
+                and (c3, c4) in JamoWord.COMPOSE_MAP
             ):
-                jamo[i + 2] = self.COMPOSE_MAP[(c3, c4)]
+                jamo[i + 2] = JamoWord.COMPOSE_MAP[(c3, c4)]
                 jamo.pop(i + 3)
                 dbg(f"compound final: {(c3, c4)} -> {jamo[i+2]}")
                 continue
@@ -97,12 +99,12 @@ class JamoWord:
                 out.append(j2h(c1, c2, c3))
                 break
 
-            if self._is_vowel(c4):
+            if JamoWord._is_vowel(c4):
                 out.append(j2h(c1, c2))
                 i += 2
                 continue
 
-            if self._is_vowel(c5):
+            if JamoWord._is_vowel(c5):
                 out.append(j2h(c1, c2, c3))
                 i += 3
                 continue
