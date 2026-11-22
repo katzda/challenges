@@ -1,3 +1,6 @@
+(() => {
+const HANGUL_ASSET_BASE = new URL(".", document.currentScript.src);
+
 class HangulGrid {
   constructor() {
     this.choseong = [
@@ -386,7 +389,6 @@ class HangulGrid {
     this.renderNotes();
     this.renderGreenNotes();
     this.setupButtons();
-    this.setupGreenNoteEditing();
   }
 
   setupFloatingNote() {
@@ -476,7 +478,10 @@ class HangulGrid {
 
       cell.addEventListener("click", e => {
         if (e.target === redMarker || e.target === greenMarker) return;
-        this.audio.src = `sounds/${this.folderMap[consonant]}/${fileNumber}.wav`;
+        this.audio.src = new URL(
+          `sounds/${this.folderMap[consonant]}/${fileNumber}.wav`,
+          HANGUL_ASSET_BASE
+        ).href;
         this.audio.currentTime = 0;
         this.audio.play();
       });
@@ -614,6 +619,7 @@ class HangulGrid {
       this.highlights = { ...this.defaultHighlights };
       this.renderGrid();
       this.renderNotes();
+      this.renderGreenNotes();
     });
 
     document.getElementById("exportBtn").addEventListener("click", () => {
@@ -622,48 +628,8 @@ class HangulGrid {
     });
   }
 
-  setupGreenNoteEditing() {
-    document.addEventListener("click", e => {
-      const el = e.target;
-      if (!el.classList.contains("green-note-text")) return;
-
-      const level = el.dataset.green;
-
-      // Avoid opening multiple textareas
-      if (document.querySelector(".green-note-editor")) return;
-
-      const textarea = document.createElement("textarea");
-      textarea.value = el.textContent === "Click to add note" ? "" : el.textContent;
-      textarea.className = "green-note-editor";
-
-      el.replaceWith(textarea);
-      textarea.focus();
-
-      const replaceWithTextDiv = () => {
-        const newDiv = document.createElement("div");
-        newDiv.className = "green-note-text";
-        newDiv.dataset.green = level;
-        newDiv.textContent = this.greenNotes[level] || "Click to add note";
-        textarea.replaceWith(newDiv);
-      };
-
-      textarea.addEventListener("blur", () => {
-        this.greenNotes[level] = textarea.value.trim();
-        this.saveGreenNotes();
-        replaceWithTextDiv();
-        this.renderGreenNotes(); // update visibility if needed
-      });
-
-      // Optional: pressing Enter could also finish editing
-      textarea.addEventListener("keydown", ev => {
-        if (ev.key === "Enter") {
-          ev.preventDefault();
-          textarea.blur();
-        }
-      });
-    });
-  }
 }
 
 const hangulGrid = new HangulGrid();
 hangulGrid.init();
+})();

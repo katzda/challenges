@@ -1,0 +1,26 @@
+#!/bin/sh
+set -eu
+
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+IMAGE_NAME=korean-dict
+CONTAINER_NAME=korean-dict
+PORT=${PORT:-8000}
+
+if ! command -v docker >/dev/null 2>&1; then
+    echo "Docker is required to run korean-dict." >&2
+    exit 1
+fi
+
+"$SCRIPT_DIR/build"
+
+existing_container=$(docker ps -a --filter "name=^/${CONTAINER_NAME}$" --format '{{.Names}}')
+if [ -n "$existing_container" ]; then
+    docker rm -f "$CONTAINER_NAME"
+fi
+
+docker run --detach \
+    --name "$CONTAINER_NAME" \
+    --publish "${PORT}:8000" \
+    "$IMAGE_NAME"
+
+printf 'Korean dictionary is running at http://localhost:%s/\n' "$PORT"

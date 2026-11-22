@@ -1,4 +1,7 @@
 class Hangulish:
+    """
+    Transcribe korean words with english letters
+    """
 
     en_to_ko = {
         "ng": "ㅇ",

@@ -1,0 +1,17 @@
+#!/bin/sh
+set -eu
+
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+
+if ! command -v docker >/dev/null 2>&1; then
+    echo "Docker is required to build korean-dict." >&2
+    exit 1
+fi
+
+if [ -n "${DOCKER_CONFIG:-}" ]; then
+    docker build -t korean-dict "$SCRIPT_DIR"
+else
+    DOCKER_CONFIG_DIR=$(mktemp -d)
+    trap 'rm -rf "$DOCKER_CONFIG_DIR"' EXIT
+    DOCKER_CONFIG="$DOCKER_CONFIG_DIR" docker build -t korean-dict "$SCRIPT_DIR"
+fi

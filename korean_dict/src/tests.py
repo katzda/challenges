@@ -2,7 +2,6 @@
 
 from Indexes import Indexes
 from JamoWord import JamoWord
-from WiktionaryEnglishScraper import WiktionaryEnglishScraper
 
 sortedList_freq = Indexes.read_json("./web/dictionary/indexes/sortedList_freq.json")
 sortedList_defaulthangul = Indexes.read_json("./web/dictionary/indexes/sortedList_defaulthangul.json")
@@ -29,12 +28,3 @@ print("Length >= 6:" + str(line_x == 2352))
 
 print(JamoWord.decompose("한굴") == "ㅎㅏㄴㄱㅜㄹ")
 print(JamoWord.compose("ㅎㅏㄴㄱㅜㄹ") == "한굴")
-
-scraper = WiktionaryEnglishScraper(
-    output_path="./web/dictionary/indexes/ko_en.json",
-    sleeptime=1,       # average 1s per request
-    batch_size=50,     # take a long break every 50 words
-    long_break=60      # 1 minute break
-)
-data = scraper.scrape_words(filtered_sortedList_length_freq_customalpha)
-scraper.print_json()

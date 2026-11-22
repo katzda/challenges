@@ -1,30 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Hangul Dictionary Prototype</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Korean Dictionary</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="sidebar">
-    <h3>Sort / Bookmarks</h3>
-    <select id="sortSelect">
-      <option value="by_frequency">Frequency</option>
-      <option value="by_alphabet">Alphabet</option>
-      <option value="by_length">Length</option>
-    </select>
-    <div id="bookmarks"></div>
+  <nav class="site-nav" aria-label="Korean tools">
+    <a href="../index.html">Home</a>
+    <a href="../hangul/index.html">Hangul pronunciation</a>
+  </nav>
+
+  <h1>Korean Dictionary</h1>
+  <p id="loadStatus" role="status">Loading dictionary indexes…</p>
+
+  <div id="dictionaryApp" hidden>
+    <aside id="sidebar">
+      <label for="sortSelect">Browse index</label>
+      <select id="sortSelect">
+        <option value="by_frequency">Frequency</option>
+        <option value="by_alphabet">Hangul alphabet</option>
+        <option value="by_length_customalpha">Word length</option>
+        <option value="by_length_freq_customalpha">Length, then frequency</option>
+        <option value="by_keylength_alpha">Length, then alphabet</option>
+        <option value="by_filtered_length_freq_customalpha">Frequent words by length</option>
+      </select>
+
+      <label for="searchInput">Search Hangul, Jamo, or English</label>
+      <input id="searchInput" type="search" autocomplete="off" placeholder="Search dictionary">
+
+      <div id="bookmarks" aria-label="Index shortcuts"></div>
+    </aside>
+
+    <main id="main">
+      <p id="position" aria-live="polite"></p>
+      <div class="pages">
+        <article id="pageLeft" class="page" aria-label="Dictionary entry"></article>
+        <article id="pageRight" class="page" aria-label="Dictionary entry"></article>
+      </div>
+      <div id="controls">
+        <button id="prevBtn" type="button">Previous</button>
+        <button id="nextBtn" type="button">Next</button>
+      </div>
+    </main>
   </div>
 
-  <div id="main">
-    <div id="pageLeft" class="page"></div>
-    <div id="pageRight" class="page"></div>
-    <div id="controls">
-      <button id="prevBtn">Prev</button>
-      <button id="nextBtn">Next</button>
-    </div>
-  </div>
-
-<script src="main.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

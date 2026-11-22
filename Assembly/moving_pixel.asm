@@ -19,11 +19,10 @@ define displayPointer $00       ; 2 bytes needed
 define sleepDuration $02
 define min $03
 define max $04
-define displayHighMIN $02
-define displayHighMax $05
-define tmp $06
+define displayHighMIN $05
+define displayHighMax $06
+define tmp $07
 
-; Start
 
 jsr initMemory
 jsr main
@@ -35,7 +34,7 @@ initMemory:
     sta min
     lda #$ff
     sta max
-    lda #$01
+    lda #$50
     sta sleepDuration
     lda #$06
     sta displayHighMax
@@ -95,6 +94,12 @@ clearKeys:
     ldx #$00
     stx sysLastKey
     rts
+
+
+; Display boundaries: 0600 - 0200 = $400 => 1024 dec. Each row is $20 bytes long => 32 dec bytes.
+; This means we have 32 x 32 display. 2^8=32. This means take & mask 5x1 => 11111 => 1F on low byte of address 
+; to strip left bits. You get values from 1 to 32 representing which column we're on. Any higher bits represent rows, 
+; but we just need to detect the first and last so can be hardcoded.
     
 upHandler:
     ; check if incrementing will be successful
@@ -109,7 +114,7 @@ upHandler:
     tax				    ; backup HIGH
     
     cmp displayHighMIN		    ; displayPointer - displayHighMIN; Z: A = M
-    bcc upHandler_boundary
+    beq upHandler_boundary
             
     ; reset original pixel to black
     lda #$00
@@ -127,111 +132,108 @@ upHandler:
     rts
  
 downHandler:
-    ; check if incrementing will be successful
-    ldx #$44
+    ; check if I'm on the bottom border, that is high bit is 6
     ldx #$01
-    lda displayPointer
-    clc
-    adc #$20			    ; 1F is 1 row
-    sta tmp			    ; backup LOW
     lda displayPointer,x
-    adc #$00			    ; add carry only
+    and #$06    ; dont care about any other higher bits
+    cmp #$06    ; however this allows 1 extra row so we need to
+    beq downHandler_boundary
     
-    tax				    ; backup HIGH
-    
-    cmp displayHighMax		    ; displayPointer - displayHighMax; Z: A = M
-    bcs downHandler_boundary
-            
     ; reset original pixel to black
     lda #$00
     ldy #$00
     sta (displayPointer),y
     
-    ; move pointer to another location
-    lda tmp ; load LOW
-    stx tmp ; backup HIGH
-    ldx #$01
+    ; increment low
+    lda displayPointer
+    clc
+    adc #$20			    ; 1F is 1 row
     sta displayPointer
-    lda tmp
+    
+    ; increment high
+    ldx #$01
+    lda displayPointer,x
+    adc #$00			    ; add carry only
     sta displayPointer,x
+    
     downHandler_boundary:
     rts
     
 rightHandler:
-    ; check if incrementing will be successful
-    ldx #$45
-    ldx #$01
+    ; check if I'm on the right border
     lda displayPointer
-    clc
-    adc #$01			    ; 1F is 1 row
-    sta tmp			    ; backup LOW
-    lda displayPointer,x
-    adc #$00			    ; add carry only
+    and #$1F    ; dont care about any other higher bits
+    cmp #$1f    ; only 0011111 value is the right border    
+    beq rightHandler_boundary
     
-    tax				    ; backup HIGH
-    
-    cmp displayHighMax		    ; displayPointer - displayHighMax; Z: A = M
-    bcs rightHandler_boundary
-            
     ; reset original pixel to black
     lda #$00
     ldy #$00
     sta (displayPointer),y
     
-    ; move pointer to another location
-    lda tmp ; load LOW
-    stx tmp ; backup HIGH
-    ldx #$01
+    ; increment low
+    lda displayPointer
+    clc
+    adc #$01
     sta displayPointer
-    lda tmp
+    
+    ; increment high
+    ldx #$01
+    lda displayPointer,x
+    adc #$00			    ; add carry only
+    ldx #$01
     sta displayPointer,x
+    
     rightHandler_boundary:
     rts
     
 
 leftHandler:
-    ; check if incrementing will be successful
-    ldx #$46
-    ldx #$01
+    ; check if I'm on the right border
     lda displayPointer
-    sec
-    sbc #$01			    ; 1F is 1 row
-    sta tmp			    ; backup LOW
-    lda displayPointer,x
-    sbc #$00			    ; add carry only
-    tax				    ; backup HIGH
+    and #$1F    ; dont care about any other higher bits
+    cmp #$00    ; only 0000000 value is the left border    
+    beq leftHandler_boundary
     
-    cmp displayHighMIN		    ; displayPointer - displayHighMIN; Z: A = M
-    bcc leftHandler_boundary
-            
     ; reset original pixel to black
     lda #$00
     ldy #$00
     sta (displayPointer),y
     
-    ; move pointer to another location
-    lda tmp ; load LOW
-    stx tmp ; backup HIGH
-    ldx #$01
+    ; increment low
+    lda displayPointer
+    sec
+    sbc #$01
     sta displayPointer
-    lda tmp
+                
+    ; increment high
+    ldx #$01
+    lda displayPointer,x
+    sbc #$00			    ; add carry only
     sta displayPointer,x
+    
     leftHandler_boundary:
     rts
   
 main:
     jsr incrementPixel
     jsr readKeys    
+    jsr sleep
     jmp main
  
 
-pause:
+sleep:
+    ldx #$44
     ldx sleepDuration
-    spinloop:
+    do_sleep:
+	nop
+	nop
+	nop
+	nop
 	nop
 	nop
 	dex
-    bne spinloop
+    bne do_sleep
     rts
   
   

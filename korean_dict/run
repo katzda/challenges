@@ -1,0 +1,38 @@
+#!/bin/sh
+set -eu
+
+if [ "$#" -eq 0 ]; then
+    echo "Usage: ./run <script.py> [arguments...]" >&2
+    exit 2
+fi
+
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+IMAGE_NAME=korean-dict-python
+
+if ! command -v docker >/dev/null 2>&1; then
+    echo "Docker is required to run Python scripts." >&2
+    exit 1
+fi
+
+run_script() {
+    docker build \
+        --file "$SCRIPT_DIR/Dockerfile" \
+        --target python-runner \
+        --tag "$IMAGE_NAME" \
+        "$SCRIPT_DIR"
+
+    docker run --rm --interactive \
+        --user "$(id -u):$(id -g)" \
+        --volume "$SCRIPT_DIR:/workspace" \
+        --workdir /workspace \
+        "$IMAGE_NAME" "$@"
+}
+
+if [ -n "${DOCKER_CONFIG:-}" ]; then
+    run_script "$@"
+else
+    DOCKER_CONFIG_DIR=$(mktemp -d)
+    trap 'rm -rf "$DOCKER_CONFIG_DIR"' EXIT
+    export DOCKER_CONFIG="$DOCKER_CONFIG_DIR"
+    run_script "$@"
+fi
