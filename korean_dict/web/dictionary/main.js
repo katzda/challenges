@@ -56,17 +56,30 @@ const COMPOUND_FINALS = new Map([
   ["ㄹㅎ", "ㅀ"],
   ["ㅂㅅ", "ㅄ"]
 ]);
+const WORD_LABELS = new Set([
+  "adjective", "adverb", "allomorph", "archaic", "auxiliary", "colloquial",
+  "conditional", "conjunction", "dated", "declarative", "dialectal",
+  "eumhun", "euphemistic", "exclamatory", "formal", "form", "future",
+  "historical", "honorific", "hortative", "imperative", "indicative",
+  "informal", "intransitive", "interjection", "interrogative", "isbn",
+  "literary", "mc", "noun", "obsolete", "past", "particle", "polite",
+  "poetic", "prefix", "present", "pronoun", "rare", "rfdef", "slang",
+  "subjunctive", "suffix", "transitive", "uncommon", "verb",
+  "voalearningenglish", "vulgar"
+]);
 
 let indexes = {};
 let koEn = {};
 let currentSort = "by_frequency";
 let currentIndex = 0;
+let pageSize = 10;
 let sortedItems = [];
 let visibleItems = [];
 
 const loadStatus = document.getElementById("loadStatus");
 const dictionaryApp = document.getElementById("dictionaryApp");
 const searchInput = document.getElementById("searchInput");
+const pageSizeSelect = document.getElementById("pageSize");
 
 async function fetchJson(path) {
   const response = await fetch(path);
@@ -125,13 +138,18 @@ async function initializeApp() {
       setSort(event.target.value);
     });
     searchInput.addEventListener("input", applySearch);
+    pageSizeSelect.addEventListener("change", event => {
+      pageSize = Number(event.target.value);
+      currentIndex = 0;
+      renderPages();
+    });
     document.getElementById("prevBtn").addEventListener("click", () => {
-      currentIndex = Math.max(0, currentIndex - 2);
+      currentIndex = Math.max(0, currentIndex - pageSize);
       renderPages();
     });
     document.getElementById("nextBtn").addEventListener("click", () => {
-      if (currentIndex + 2 < visibleItems.length) {
-        currentIndex += 2;
+      if (currentIndex + pageSize < visibleItems.length) {
+        currentIndex += pageSize;
       }
       renderPages();
     });
@@ -210,30 +228,26 @@ function addBookmark(label, onClick) {
 }
 
 function renderPages() {
-  const leftItem = visibleItems[currentIndex];
-  const rightItem = visibleItems[currentIndex + 1];
-  renderEntry(document.getElementById("pageLeft"), leftItem);
-  renderEntry(document.getElementById("pageRight"), rightItem);
+  const pageItems = visibleItems.slice(currentIndex, currentIndex + pageSize);
+  const entries = document.getElementById("entries");
+  entries.replaceChildren(...pageItems.map(renderEntry));
 
   const position = document.getElementById("position");
   if (visibleItems.length === 0) {
     position.textContent = "No dictionary entries match this search.";
   } else {
     const first = currentIndex + 1;
-    const last = Math.min(currentIndex + 2, visibleItems.length);
+    const last = currentIndex + pageItems.length;
     position.textContent = `Showing ${first}–${last} of ${visibleItems.length} entries`;
   }
 
   document.getElementById("prevBtn").disabled = currentIndex === 0;
-  document.getElementById("nextBtn").disabled = currentIndex + 2 >= visibleItems.length;
+  document.getElementById("nextBtn").disabled = currentIndex + pageSize >= visibleItems.length;
 }
 
-function renderEntry(container, item) {
-  container.replaceChildren();
-  if (!item) {
-    return;
-  }
-
+function renderEntry(item) {
+  const entry = document.createElement("article");
+  entry.className = "entry";
   const heading = document.createElement("h2");
   heading.textContent = composeJamo(item.jamo);
 
@@ -241,17 +255,57 @@ function renderEntry(container, item) {
   jamo.className = "jamo";
   jamo.textContent = item.jamo;
 
-  const meanings = koEn[item.jamo] || [];
+  const { meanings, labels } = splitMeanings(koEn[item.jamo] || []);
   const meaningText = document.createElement("p");
   meaningText.className = "meanings";
-  meaningText.textContent = meanings.length
-    ? `${meanings.slice(0, 8).join(", ")}${meanings.length > 8 ? `, and ${meanings.length - 8} more` : ""}`
-    : "No English meanings found.";
+  if (meanings.length) {
+    meaningText.textContent =
+      `${meanings.slice(0, 8).join(", ")}${meanings.length > 8 ? `, and ${meanings.length - 8} more` : ""}`;
+  } else {
+    meaningText.classList.add("missing");
+    meaningText.textContent = "No English meaning found.";
+  }
 
   const frequency = document.createElement("p");
+  frequency.className = "frequency";
   frequency.textContent = `Frequency: ${item.frequency}`;
 
-  container.append(heading, jamo, meaningText, frequency);
+  entry.append(heading, jamo, meaningText, frequency);
+  if (labels.length) {
+    const labelList = document.createElement("div");
+    labelList.className = "labels";
+    labelList.setAttribute("aria-label", "Grammar and usage labels");
+    for (const label of labels) {
+      const tag = document.createElement("span");
+      tag.className = "label-tag";
+      tag.textContent = label;
+      labelList.appendChild(tag);
+    }
+    entry.appendChild(labelList);
+  }
+
+  return entry;
+}
+
+function splitMeanings(values) {
+  const meanings = [];
+  const labels = [];
+
+  for (const value of values) {
+    const normalized = value.toLocaleLowerCase();
+    if (
+      WORD_LABELS.has(normalized) ||
+      normalized.endsWith("dialect") ||
+      normalized.startsWith("template") ||
+      normalized.startsWith("module")
+    ) {
+      labels.push(value);
+    } else {
+      meanings.push(value);
+    }
+  }
+
+  return { meanings, labels: [...new Set(labels)] };
 }
 
 function composeJamo(word) {
@@ -320,7 +374,7 @@ function jumpToLength(length) {
 function jumpTo(predicate) {
   const index = visibleItems.findIndex(predicate);
   if (index !== -1) {
-    currentIndex = index;
+    currentIndex = Math.floor(index / pageSize) * pageSize;
     renderPages();
   }
 }

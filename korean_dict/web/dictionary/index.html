@@ -30,18 +30,22 @@
       <label for="searchInput">Search Hangul, Jamo, or English</label>
       <input id="searchInput" type="search" autocomplete="off" placeholder="Search dictionary">
 
+      <label for="pageSize">Words per page</label>
+      <select id="pageSize">
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+      </select>
+
       <div id="bookmarks" aria-label="Index shortcuts"></div>
     </aside>
 
     <main id="main">
       <p id="position" aria-live="polite"></p>
-      <div class="pages">
-        <article id="pageLeft" class="page" aria-label="Dictionary entry"></article>
-        <article id="pageRight" class="page" aria-label="Dictionary entry"></article>
-      </div>
+      <section id="entries" class="entries" aria-label="Dictionary entries"></section>
       <div id="controls">
-        <button id="prevBtn" type="button">Previous</button>
-        <button id="nextBtn" type="button">Next</button>
+        <button id="prevBtn" type="button">Previous page</button>
+        <button id="nextBtn" type="button">Next page</button>
       </div>
     </main>
   </div>

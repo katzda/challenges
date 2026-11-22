@@ -83,27 +83,30 @@ h1 {
   color: #50555c;
 }
 
-.pages {
+.entries {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
-.page {
-  min-height: 18rem;
-  padding: 1.25rem;
+.entry {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.8fr) minmax(0, 2fr) minmax(7rem, auto);
+  align-items: center;
+  gap: 0.25rem 1rem;
+  padding: 0.75rem 1rem;
   background: white;
   border: 1px solid #c8cdd4;
-  border-radius: 0.5rem;
+  border-radius: 0.4rem;
   box-shadow: 0 2px 6px #0000000d;
 }
 
-.page h2 {
-  margin: 0 0 0.25rem;
-  font-size: 2rem;
+.entry h2 {
+  margin: 0;
+  font-size: 1.5rem;
 }
 
-.page p {
+.entry p {
+  margin: 0;
   overflow-wrap: anywhere;
 }
 
@@ -113,8 +116,35 @@ h1 {
 }
 
 .meanings {
-  min-height: 3rem;
   line-height: 1.5;
+}
+
+.meanings.missing {
+  color: #9299a3;
+  font-style: italic;
+}
+
+.labels {
+  display: flex;
+  flex-wrap: wrap;
+  grid-column: 1 / -1;
+  gap: 0.35rem;
+}
+
+.label-tag {
+  padding: 0.15rem 0.5rem;
+  color: #58616d;
+  background: #edf0f3;
+  border: 1px solid #dce1e6;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.frequency {
+  color: #50555c;
+  font-size: 0.9rem;
+  text-align: right;
 }
 
 #controls {
@@ -134,16 +164,19 @@ h1 {
     padding: 1rem;
   }
 
-  #dictionaryApp,
-  .pages {
+  #dictionaryApp {
     grid-template-columns: 1fr;
+  }
+
+  .entry {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .entry .meanings {
+    grid-column: 1 / -1;
   }
 
   #bookmarks {
     max-height: 12rem;
-  }
-
-  .page {
-    min-height: 12rem;
   }
 }
